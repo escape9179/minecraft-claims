@@ -1,0 +1,17 @@
+package net.cozymc.main.file
+
+import net.cozymc.main.CONFIG_FILE_NAME
+import net.cozymc.main.DATA_FOLDER_PATH
+import org.bukkit.configuration.file.YamlConfiguration
+import java.io.File
+
+object Config {
+    var file = File(DATA_FOLDER_PATH, CONFIG_FILE_NAME)
+    var config = YamlConfiguration.loadConfiguration(file)
+
+    fun getClaimCost(): Int = TODO("Implementation")
+
+    fun reload() {
+        config = YamlConfiguration.loadConfiguration(file)
+    }
+}

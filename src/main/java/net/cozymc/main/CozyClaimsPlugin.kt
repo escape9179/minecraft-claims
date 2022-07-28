@@ -5,6 +5,10 @@ import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.plugin.java.JavaPlugin
 
+val DATA_FOLDER_PATH = "plugins/CozyClaims/"
+val CONFIG_FILE_NAME = "config.yml"
+val DATA_FILE_NAME = "data.yml"
+
 class CozyClaimsPlugin : JavaPlugin() {
 
     override fun onEnable() {
