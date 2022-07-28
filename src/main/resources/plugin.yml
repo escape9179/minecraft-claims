@@ -1,0 +1,13 @@
+name: Claims
+version: '${project.version}'
+main: net.cozymc.main.ClaimsPlugin
+api-version: 1.13
+author: [escape9179]
+description: Inspired by ManaCube's claim plugin.
+permissions:
+  cozyclaims.*:
+    description: Access all plugin capabilities and commands.
+  cozyclaims.claim:
+    description: Claim a chunk of land.
+  cozyclaims.reload:
+    description: Reload the configuration.
