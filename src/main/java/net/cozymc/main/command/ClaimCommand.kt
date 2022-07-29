@@ -17,7 +17,7 @@ class ClaimCommand : BasicCommand<Player>(
     override fun run(sender: Player, args: Array<out String>, data: Any?): Boolean {
         if (sender.getBalance() >= Config.getClaimCost()
             && Data.getClaimAt(sender.location) == null
-            && WorldGuard.isRegion(sender.location)) {
+            && !WorldGuard.isRegion(sender.location)) {
             //TODO("Implementation")
         }
         return true
