@@ -11,6 +11,8 @@ object Config {
 
     fun getClaimCost(): Int = TODO("Implementation")
 
+    fun getChunkClaimSuccessMessage(): String = TODO("Implementation")
+
     fun reload() {
         config = YamlConfiguration.loadConfiguration(file)
     }

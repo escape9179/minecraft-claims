@@ -18,6 +18,8 @@ class ClaimCommand : BasicCommand<Player>(
         if (sender.getBalance() >= Config.getClaimCost()
             && Data.getClaimAt(sender.location) == null
             && !WorldGuard.isRegion(sender.location)) {
+            Data.addClaim(sender.uniqueId, sender.location.chunk)
+            sender.sendMessage(Config.getChunkClaimSuccessMessage())
             //TODO("Implementation")
         }
         return true
