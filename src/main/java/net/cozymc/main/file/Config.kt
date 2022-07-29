@@ -13,6 +13,12 @@ object Config {
 
     fun getChunkClaimSuccessMessage(): String = TODO("Implementation")
 
+    fun getChunkClaimFailureMoneyMessage(): String = TODO("Implementation")
+
+    fun getChunkClaimFailureClaimedMessage(): String = TODO("Implementation")
+
+    fun getChunkClaimFailureRegionMessage(): String = TODO("Implementation")
+
     fun reload() {
         config = YamlConfiguration.loadConfiguration(file)
     }

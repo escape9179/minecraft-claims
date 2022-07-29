@@ -13,7 +13,7 @@ object Data {
     val file = File(DATA_FOLDER_PATH, DATA_FILE_NAME)
     val dataConfig = YamlConfiguration.loadConfiguration(file)
 
-    fun getClaimAt(location: Location): Claim? = TODO("Implementation")
+    fun getClaims(): List<Claim> = TODO("Implementation")
 
     fun addClaim(owner: UUID, chunk: Chunk) {
         TODO("Implementation")
