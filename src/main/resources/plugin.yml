@@ -2,6 +2,7 @@ name: Claims
 version: '${project.version}'
 main: net.cozymc.main.ClaimsPlugin
 api-version: 1.13
+depend: [WorldGuard, EssentialsX]
 author: [escape9179]
 description: Inspired by ManaCube's claim plugin.
 permissions:
