@@ -16,19 +16,16 @@ class ClaimCommand : BasicCommand<Player>(
     target = SenderTarget.PLAYER,
 ) {
     override fun run(sender: Player, args: Array<out String>, data: Any?): Boolean {
-        // If the player doesn't have enough money to claim the chunk, return.
         if (sender.getBalance() <= MainConfig.getClaimCost()) {
             sender.sendMessage(MainConfig.getChunkClaimFailureMoneyMessage())
             return true
         }
 
-        // If the chunk the player is attempting to claim is already claimed, return.
         if (CozyClaimsPlugin.isClaimed(sender.location)) {
             sender.sendMessage(MainConfig.getChunkClaimFailureClaimedMessage())
             return true
         }
 
-        // If the chunk the player is attempting to claim is a WorldGuard region, return.
         if (WorldGuard.isRegion(sender.location)) {
             sender.sendMessage(MainConfig.getChunkClaimFailureRegionMessage())
             return true
