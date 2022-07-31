@@ -6,27 +6,31 @@ import org.bukkit.configuration.serialization.ConfigurationSerializable
 import org.bukkit.entity.Player
 import java.util.UUID
 
-class Claim(val owner: UUID, val location: Location) : ConfigurationSerializable {
-
-    val chunks = mutableSetOf<Location>()
+class Claim(val owner: UUID, chunk: Chunk) : ConfigurationSerializable {
+    val chunks = mutableSetOf(chunk)
+    val members = mutableSetOf<UUID>()
 
     fun addChunk(chunk: Chunk) {
-        TODO("Implementation")
+        chunks.add(chunk)
     }
 
     fun removeChunk(chunk: Chunk) {
-        TODO("Implementation")
+        chunks.remove(chunk)
     }
 
-    fun addMember(player: Player) {
-        TODO("Implementation")
+    fun addMember(player: Player): Boolean {
+        return members.add(player.uniqueId)
     }
 
-    fun removeMember(player: Player) {
-        TODO("Implementation")
+    fun removeMember(player: Player): Boolean {
+        return members.remove(player.uniqueId)
     }
 
     override fun serialize(): MutableMap<String, Any> {
-        TODO("Not yet implemented")
+        return mutableMapOf(
+            "owner" to owner,
+            "members" to members,
+            "chunks" to chunks
+        )
     }
 }
