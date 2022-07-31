@@ -14,6 +14,10 @@ object DataConfig {
 
     fun getClaims(): List<Claim> = TODO("Implementation")
 
+    fun getClaim(uuid: UUID): Claim? {
+        return getClaims().find { it.owner == uuid }
+    }
+
     fun addClaim(owner: UUID, chunk: Chunk) {
         TODO("Implementation")
     }

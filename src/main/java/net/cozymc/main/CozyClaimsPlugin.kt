@@ -1,6 +1,8 @@
 package net.cozymc.main
 
 import net.cozymc.api.command.CommandDispatcher
+import net.cozymc.main.command.ClaimAddCommand
+import net.cozymc.main.command.ClaimCommand
 import org.bukkit.Location
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
@@ -13,6 +15,8 @@ val DATA_FILE_NAME = "data.yml"
 class CozyClaimsPlugin : JavaPlugin() {
 
     override fun onEnable() {
+        CommandDispatcher.registerCommand(ClaimCommand())
+        CommandDispatcher.registerCommand(ClaimAddCommand())
         logger.info("$name enabled.")
     }
 
