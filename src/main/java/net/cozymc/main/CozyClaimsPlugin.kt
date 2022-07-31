@@ -18,6 +18,8 @@ val DATA_FILE_NAME = "data.yml"
 class CozyClaimsPlugin : JavaPlugin() {
 
     override fun onEnable() {
+        instance = this
+        essentials = server.pluginManager.getPlugin("Essentials") as Essentials
         CommandDispatcher.registerCommand(ClaimCommand())
         CommandDispatcher.registerCommand(ClaimAddMemberCommand())
         CommandDispatcher.registerCommand(ClaimRemoveMemberCommand())
@@ -34,10 +36,8 @@ class CozyClaimsPlugin : JavaPlugin() {
     }
 
     companion object {
+        lateinit var instance: CozyClaimsPlugin
+        lateinit var essentials: Essentials
         fun isClaimed(location: Location): Boolean = TODO("Implementation")
-
-        fun getEssentials(): Essentials {
-            TODO("Implementation")
-        }
     }
 }
