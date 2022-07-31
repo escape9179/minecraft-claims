@@ -9,16 +9,16 @@ import java.util.*
 
 object DataConfig {
     private val file = File(DATA_FOLDER_PATH, DATA_FILE_NAME)
-    private val dataConfig = YamlConfiguration.loadConfiguration(file)
+    private val config = YamlConfiguration.loadConfiguration(file)
 
     fun getClaim(owner: UUID): Claim? {
-        return dataConfig.getSerializable("$owner.claim", Claim::class.java) //TODO Add default value.
+        return config.getSerializable("$owner.claim", Claim::class.java) //TODO Add default value.
     }
 
     fun saveClaim(owner: UUID, claim: Claim) {
-        dataConfig.set("$owner.claims", claim)
+        config.set("$owner.claims", claim)
         save()
     }
 
-    private fun save() = dataConfig.save(file)
+    private fun save() = config.save(file)
 }
