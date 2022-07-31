@@ -4,6 +4,7 @@ import net.cozymc.api.command.CommandDispatcher
 import net.cozymc.main.command.ClaimAddMemberCommand
 import net.cozymc.main.command.ClaimCommand
 import net.cozymc.main.command.ClaimRemoveMemberCommand
+import net.cozymc.main.command.ClaimUnclaimCommand
 import org.bukkit.Location
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
@@ -19,6 +20,7 @@ class CozyClaimsPlugin : JavaPlugin() {
         CommandDispatcher.registerCommand(ClaimCommand())
         CommandDispatcher.registerCommand(ClaimAddMemberCommand())
         CommandDispatcher.registerCommand(ClaimRemoveMemberCommand())
+        CommandDispatcher.registerCommand(ClaimUnclaimCommand())
         logger.info("$name enabled.")
     }
 

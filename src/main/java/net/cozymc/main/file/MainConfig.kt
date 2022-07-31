@@ -3,6 +3,7 @@ package net.cozymc.main.file
 import net.cozymc.main.CONFIG_FILE_NAME
 import net.cozymc.main.DATA_FOLDER_PATH
 import org.bukkit.configuration.file.YamlConfiguration
+import org.bukkit.entity.Player
 import java.io.File
 
 object MainConfig {
@@ -26,6 +27,14 @@ object MainConfig {
     fun getRemoveMemberSuccessMessage(name: String): String = TODO("Implementation")
 
     fun getUnknownPlayerMessage(): String = TODO("Implementation")
+
+    fun getClaimRemoveSuccessMessage(chunkCount: Int): String = TODO("Implementation")
+
+    fun getUsageSpecifyClaimNameMessage(): String = TODO("Implementation")
+
+    fun getHasNoClaimMessage(player: Player): String = TODO("Implementation")
+
+    fun getClaimRemoveSuccessOtherMessage(player: Player, chunkCount: Int): String = TODO("Implementation")
 
     fun reload() {
         config = YamlConfiguration.loadConfiguration(file)

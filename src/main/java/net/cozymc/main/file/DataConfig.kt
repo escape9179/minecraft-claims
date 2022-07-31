@@ -21,4 +21,8 @@ object DataConfig {
     fun addClaim(owner: UUID, chunk: Chunk) {
         TODO("Implementation")
     }
+
+    fun removeClaim(owner: UUID): Claim? {
+        TODO("Implementation")
+    }
 }
