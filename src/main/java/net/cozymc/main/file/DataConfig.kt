@@ -11,12 +11,18 @@ object DataConfig {
     private val file = File(DATA_FOLDER_PATH, DATA_FILE_NAME)
     private val config = YamlConfiguration.loadConfiguration(file)
 
+    fun getClaims(): Set<Claim> {
+        return config.getKeys(false)
+            .map { key -> config.getSerializable("$key.claim", Claim::class.java) }
+            .toSet()
+    }
+
     fun getClaim(owner: UUID): Claim? {
         return config.getSerializable("$owner.claim", Claim::class.java) //TODO Add default value.
     }
 
-    fun saveClaim(owner: UUID, claim: Claim) {
-        config.set("$owner.claims", claim)
+    fun saveClaim(claim: Claim) {
+        config.set("${claim.owner}.claim", claim)
         save()
     }
 

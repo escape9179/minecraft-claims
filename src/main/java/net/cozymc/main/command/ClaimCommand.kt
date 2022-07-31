@@ -2,6 +2,7 @@ package net.cozymc.main.command
 
 import logan.api.command.BasicCommand
 import logan.api.command.SenderTarget
+import net.cozymc.main.Claim
 import net.cozymc.main.CozyClaimsPlugin
 import net.cozymc.main.WorldGuard
 import net.cozymc.main.file.MainConfig
@@ -21,7 +22,7 @@ class ClaimCommand : BasicCommand<Player>(
             return true
         }
 
-        if (CozyClaimsPlugin.isClaimed(sender.location)) {
+        if (Claim.isClaimed(sender.location)) {
             sender.sendMessage(MainConfig.getChunkClaimFailureClaimedMessage())
             return true
         }
@@ -30,10 +31,8 @@ class ClaimCommand : BasicCommand<Player>(
             sender.sendMessage(MainConfig.getChunkClaimFailureRegionMessage())
             return true
         }
-
-        DataConfig.saveClaim(sender.uniqueId, sender.location.chunk)
+        DataConfig.saveClaim(Claim.getOrCreate(sender.uniqueId, sender.location.chunk))
         sender.sendMessage(MainConfig.getChunkClaimSuccessMessage())
-
         return true
     }
 }

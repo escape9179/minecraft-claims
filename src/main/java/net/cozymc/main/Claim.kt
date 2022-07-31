@@ -1,5 +1,6 @@
 package net.cozymc.main
 
+import net.cozymc.main.file.DataConfig
 import org.bukkit.Chunk
 import org.bukkit.Location
 import org.bukkit.configuration.serialization.ConfigurationSerializable
@@ -32,5 +33,16 @@ class Claim(val owner: UUID, chunk: Chunk) : ConfigurationSerializable {
             "members" to members,
             "chunks" to chunks
         )
+    }
+
+    companion object {
+        fun isClaimed(location: Location): Boolean {
+            DataConfig.getClaims().forEach { if (it.chunks.contains(location.chunk)) return true }
+            return false
+        }
+
+        fun getOrCreate(owner: UUID, chunk: Chunk): Claim {
+            return DataConfig.getClaim(owner)?.also { it.addChunk(chunk) } ?: return Claim(owner, chunk)
+        }
     }
 }

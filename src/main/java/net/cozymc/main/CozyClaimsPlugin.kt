@@ -38,6 +38,5 @@ class CozyClaimsPlugin : JavaPlugin() {
     companion object {
         lateinit var instance: CozyClaimsPlugin
         lateinit var essentials: Essentials
-        fun isClaimed(location: Location): Boolean = TODO("Implementation")
     }
 }
