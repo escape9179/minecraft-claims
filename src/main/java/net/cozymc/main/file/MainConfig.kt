@@ -19,9 +19,14 @@ object MainConfig {
 
     fun getChunkClaimFailureRegionMessage(): String = TODO("Implementation")
 
+    fun getNotClaimOwnerMessage(): String = TODO("Implementation")
+
+    fun getAddMemberSuccessMessage(name: String): String = TODO("Implementation")
+
+    fun getRemoveMemberSuccessMessage(name: String): String = TODO("Implementation")
+
     fun getUnknownPlayerMessage(): String = TODO("Implementation")
 
-    fun getUnknownClaimMessage(): String = TODO("Implementation")
     fun reload() {
         config = YamlConfiguration.loadConfiguration(file)
     }
