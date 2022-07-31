@@ -31,7 +31,7 @@ class ClaimCommand : BasicCommand<Player>(
             return true
         }
 
-        DataConfig.addClaim(sender.uniqueId, sender.location.chunk)
+        DataConfig.saveClaim(sender.uniqueId, sender.location.chunk)
         sender.sendMessage(MainConfig.getChunkClaimSuccessMessage())
 
         return true

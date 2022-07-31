@@ -3,26 +3,22 @@ package net.cozymc.main.file
 import net.cozymc.main.Claim
 import net.cozymc.main.DATA_FILE_NAME
 import net.cozymc.main.DATA_FOLDER_PATH
-import org.bukkit.Chunk
 import org.bukkit.configuration.file.YamlConfiguration
 import java.io.File
 import java.util.*
 
 object DataConfig {
-    val file = File(DATA_FOLDER_PATH, DATA_FILE_NAME)
-    val dataConfig = YamlConfiguration.loadConfiguration(file)
+    private val file = File(DATA_FOLDER_PATH, DATA_FILE_NAME)
+    private val dataConfig = YamlConfiguration.loadConfiguration(file)
 
-    fun getClaims(): List<Claim> = TODO("Implementation")
-
-    fun getClaim(uuid: UUID): Claim? {
-        return getClaims().find { it.owner == uuid }
+    fun getClaim(owner: UUID): Claim? {
+        return dataConfig.getSerializable("$owner.claim", Claim::class.java) //TODO Add default value.
     }
 
-    fun addClaim(owner: UUID, chunk: Chunk) {
-        TODO("Implementation")
+    fun saveClaim(owner: UUID, claim: Claim) {
+        dataConfig.set("$owner.claims", claim)
+        save()
     }
 
-    fun removeClaim(owner: UUID): Claim? {
-        TODO("Implementation")
-    }
+    private fun save() = dataConfig.save(file)
 }
