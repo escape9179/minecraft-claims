@@ -1,5 +1,6 @@
 package net.cozymc.main
 
+import com.earth2me.essentials.Essentials
 import net.cozymc.api.command.CommandDispatcher
 import net.cozymc.main.command.ClaimAddMemberCommand
 import net.cozymc.main.command.ClaimCommand
@@ -34,5 +35,9 @@ class CozyClaimsPlugin : JavaPlugin() {
 
     companion object {
         fun isClaimed(location: Location): Boolean = TODO("Implementation")
+
+        fun getEssentials(): Essentials {
+            TODO("Implementation")
+        }
     }
 }
