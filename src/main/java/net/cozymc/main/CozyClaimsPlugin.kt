@@ -10,6 +10,7 @@ import org.bukkit.Location
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.plugin.java.JavaPlugin
+import java.io.File
 import java.io.IOException
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -24,9 +25,9 @@ class CozyClaimsPlugin : JavaPlugin() {
         instance = this
         essentials = server.pluginManager.getPlugin("Essentials") as Essentials
 
-
+        File(DATA_FOLDER_PATH).mkdirs()
         try {
-            Files.copy(javaClass.getResourceAsStream(CONFIG_FILE_NAME)!!, Paths.get(DATA_FOLDER_PATH))
+            Files.copy(javaClass.getResourceAsStream("/$CONFIG_FILE_NAME")!!, Paths.get("$DATA_FOLDER_PATH/$CONFIG_FILE_NAME"))
         } catch (e: IOException) {
             e.printStackTrace()
         }
