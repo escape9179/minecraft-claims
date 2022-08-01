@@ -10,16 +10,27 @@ import org.bukkit.Location
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.plugin.java.JavaPlugin
+import java.io.IOException
+import java.nio.file.Files
+import java.nio.file.Paths
 
-val DATA_FOLDER_PATH = "plugins/CozyClaims/"
-val CONFIG_FILE_NAME = "config.yml"
-val DATA_FILE_NAME = "data.yml"
+const val DATA_FOLDER_PATH = "plugins/CozyClaims/"
+const val CONFIG_FILE_NAME = "config.yml"
+const val DATA_FILE_NAME = "data.yml"
 
 class CozyClaimsPlugin : JavaPlugin() {
 
     override fun onEnable() {
         instance = this
         essentials = server.pluginManager.getPlugin("Essentials") as Essentials
+
+
+        try {
+            Files.copy(javaClass.getResourceAsStream(CONFIG_FILE_NAME)!!, Paths.get(DATA_FOLDER_PATH))
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+
         CommandDispatcher.registerCommand(ClaimCommand())
         CommandDispatcher.registerCommand(ClaimAddMemberCommand())
         CommandDispatcher.registerCommand(ClaimRemoveMemberCommand())
