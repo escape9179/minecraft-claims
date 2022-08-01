@@ -1,6 +1,6 @@
 name: Claims
 version: '${project.version}'
-main: net.cozymc.main.ClaimsPlugin
+main: net.cozymc.main.CozyClaimsPlugin
 api-version: 1.13
 depend: [WorldGuard, Essentials]
 author: escape9179
