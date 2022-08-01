@@ -18,7 +18,7 @@ object DataConfig {
     }
 
     fun getClaim(owner: UUID): Claim? {
-        return config.getSerializable("$owner.claim", Claim::class.java) //TODO Add default value.
+        return config.getSerializable("$owner.claim", Claim::class.java)
     }
 
     fun saveClaim(claim: Claim) {

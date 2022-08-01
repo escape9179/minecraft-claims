@@ -30,7 +30,6 @@ object MainConfig {
         return config.getString("message.chunkClaimFailureRegion")
     }
 
-    //TODO Make use of parameters
     fun getNotClaimOwnerMessage(): String {
         return config.getString("message.notClaimOwner")
     }
