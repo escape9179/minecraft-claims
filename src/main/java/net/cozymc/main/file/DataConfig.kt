@@ -26,5 +26,9 @@ object DataConfig {
         save()
     }
 
+    fun removeClaim(owner: UUID): Claim? {
+        return getClaim(owner).also { config.set("$owner.claim", null); save() }
+    }
+
     private fun save() = config.save(file)
 }
