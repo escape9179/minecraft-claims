@@ -18,8 +18,8 @@ object MainConfig {
         return config.getString("message.chunkClaimSuccess")
     }
 
-    fun getChunkClaimFailureMoneyMessage(money: Int): String {
-        return String.format(config.getString("message.chunkClaimFailureMoney"), money)
+    fun getChunkClaimFailureMoneyMessage(): String {
+        return String.format(config.getString("message.chunkClaimFailureMoney"), getClaimCost())
     }
 
     fun getChunkClaimFailureClaimedMessage(): String {
