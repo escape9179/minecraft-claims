@@ -62,6 +62,10 @@ object MainConfig {
         return String.format(config.getString("message.claimRemoveSuccessOther"), player.name, chunkCount)
     }
 
+    fun getPersonAlreadyMemberMessage(): String {
+        return config.getString("message.personAlreadyMember")
+    }
+
     fun reload() {
         config = YamlConfiguration.loadConfiguration(file)
     }

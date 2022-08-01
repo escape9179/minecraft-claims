@@ -18,11 +18,13 @@ class ClaimAddMemberCommand : BasicCommand<Player>(
             sender.sendMessage(MainConfig.getUnknownPlayerMessage())
             return true
         }
-        DataConfig.getClaim(sender.uniqueId)?.addMember(member) ?: run {
+
+        if (DataConfig.getClaim(sender.uniqueId)?.addMember(member) ?: run {
             sender.sendMessage(MainConfig.getNotClaimOwnerMessage())
             return true
-        }
-        sender.sendMessage(MainConfig.getAddMemberSuccessMessage(member.name))
+        }) sender.sendMessage(MainConfig.getAddMemberSuccessMessage(member.name))
+        else sender.sendMessage(MainConfig.getPersonAlreadyMemberMessage())
+
         return true
     }
 }
