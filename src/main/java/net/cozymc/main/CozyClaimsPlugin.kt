@@ -14,6 +14,7 @@ import java.io.File
 import java.io.IOException
 import java.nio.file.Files
 import java.nio.file.Paths
+import java.nio.file.StandardCopyOption
 
 const val DATA_FOLDER_PATH = "plugins/CozyClaims/"
 const val CONFIG_FILE_NAME = "config.yml"
@@ -29,7 +30,7 @@ class CozyClaimsPlugin : JavaPlugin() {
         try {
             Files.copy(javaClass.getResourceAsStream("/$CONFIG_FILE_NAME")!!, Paths.get("$DATA_FOLDER_PATH/$CONFIG_FILE_NAME"))
         } catch (e: IOException) {
-            e.printStackTrace()
+            logger.info("Cannot create config: ${e.cause?.message}")
         }
 
         CommandDispatcher.registerCommand(ClaimCommand())
