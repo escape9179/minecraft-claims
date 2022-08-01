@@ -15,51 +15,52 @@ object MainConfig {
     }
 
     fun getChunkClaimSuccessMessage(): String {
-        return config.getString("message.chunkClaimSuccessMessage")
+        return config.getString("message.chunkClaimSuccess")
     }
 
     fun getChunkClaimFailureMoneyMessage(): String {
-        return config.getString("message.chunkClaimFailureMoneyMessage")
+        return config.getString("message.chunkClaimFailureMoney")
     }
 
     fun getChunkClaimFailureClaimedMessage(): String {
-        return config.getString("message.chunkClaimFailureClaimedMessage")
+        return config.getString("message.chunkClaimFailureClaimed")
     }
 
     fun getChunkClaimFailureRegionMessage(): String {
-        return config.getString("message.chunkClaimFailureRegionMessage")
+        return config.getString("message.chunkClaimFailureRegion")
     }
 
+    //TODO Make use of parameters
     fun getNotClaimOwnerMessage(): String {
-        return config.getString("message.notClaimOwnerMessage")
+        return config.getString("message.notClaimOwner")
     }
 
     fun getAddMemberSuccessMessage(name: String): String {
-        return config.getString("message.addMemberSuccessMessage")
+        return String.format(config.getString("message.addMemberSuccess"), name)
     }
 
     fun getRemoveMemberSuccessMessage(name: String): String {
-        return config.getString("message.removeMemberSuccessMessage")
+        return String.format(config.getString("message.removeMemberSuccess"), name)
     }
 
     fun getUnknownPlayerMessage(): String {
-        return config.getString("message.unknownPlayerMessage")
+        return config.getString("message.unknownPlayer")
     }
 
     fun getClaimRemoveSuccessMessage(chunkCount: Int): String {
-        return config.getString("message.claimRemoveSuccessMessage")
+        return String.format(config.getString("message.claimRemoveSuccess"), chunkCount)
     }
 
     fun getUsageSpecifyClaimNameMessage(): String {
-        return config.getString("message.usageSpecifyClaimNameMessage")
+        return config.getString("message.usageSpecifyClaimName")
     }
 
     fun getHasNoClaimMessage(player: Player): String {
-        return config.getString("message.hasNoClaimMessage")
+        return String.format(config.getString("message.hasNoClaim"), player.name)
     }
 
     fun getClaimRemoveSuccessOtherMessage(player: Player, chunkCount: Int): String {
-        return config.getString("message.claimRemoveSuccessOtherMessage")
+        return String.format(config.getString("message.claimRemoveSuccessOther"), player.name, chunkCount)
     }
 
     fun reload() {
