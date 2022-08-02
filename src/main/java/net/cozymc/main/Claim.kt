@@ -1,15 +1,30 @@
 package net.cozymc.main
 
 import net.cozymc.main.file.DataConfig
+import org.bukkit.Bukkit
 import org.bukkit.Chunk
 import org.bukkit.Location
+import org.bukkit.configuration.MemorySection
+import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.configuration.serialization.ConfigurationSerializable
 import org.bukkit.entity.Player
 import java.util.UUID
 
-class Claim(val owner: UUID, chunk: Chunk) : ConfigurationSerializable {
-    val chunks = mutableSetOf(chunk)
+class Claim(val owner: UUID) : ConfigurationSerializable {
+    val chunks = mutableSetOf<Chunk>()
     val members = mutableSetOf<UUID>()
+
+    constructor(owner: UUID, chunk: Chunk) : this(owner) {
+        chunks.add(chunk)
+    }
+
+    constructor(map: Map<String, Object>) : this(UUID.fromString(map["owner"].toString())) {
+        chunks.addAll(
+            (map["chunks"] as List<String>)
+            .map { it.split(",") }
+            .map { Bukkit.getWorld(it[0]).getChunkAt(it[1].toInt(), it[2].toInt()) }
+        )
+    }
 
     fun addChunk(chunk: Chunk) {
         chunks.add(chunk)
@@ -29,9 +44,8 @@ class Claim(val owner: UUID, chunk: Chunk) : ConfigurationSerializable {
 
     override fun serialize(): MutableMap<String, Any> {
         return mutableMapOf(
-            "owner" to owner,
-            "members" to members,
-            "chunks" to chunks
+            "owner" to owner.toString(),
+            "chunks" to chunks.map { "${it.world.name},${it.x},${it.z}" }
         )
     }
 

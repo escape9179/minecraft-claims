@@ -9,7 +9,7 @@ import java.util.*
 
 object DataConfig {
     private val file = File(DATA_FOLDER_PATH, DATA_FILE_NAME)
-    private val config = YamlConfiguration.loadConfiguration(file)
+    val config = YamlConfiguration.loadConfiguration(file)
 
     fun getClaims(): Set<Claim> {
         return config.getKeys(false)
