@@ -9,6 +9,8 @@ import net.cozymc.main.command.ClaimUnclaimCommand
 import org.bukkit.Location
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
+import org.bukkit.configuration.serialization.ConfigurationSerializable
+import org.bukkit.configuration.serialization.ConfigurationSerialization
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
 import java.io.IOException
@@ -37,6 +39,9 @@ class CozyClaimsPlugin : JavaPlugin() {
         CommandDispatcher.registerCommand(ClaimAddMemberCommand())
         CommandDispatcher.registerCommand(ClaimRemoveMemberCommand())
         CommandDispatcher.registerCommand(ClaimUnclaimCommand())
+
+        ConfigurationSerialization.registerClass(Claim::class.java)
+
         logger.info("$name enabled.")
     }
 
