@@ -7,3 +7,8 @@ import org.bukkit.entity.Player
 fun Player.getBalance(): Int {
     return CozyClaimsPlugin.essentials.getUser(this).money.intValueExact()
 }
+
+fun Player.isInClaim(): Boolean {
+
+    //TODO Implementation
+}
