@@ -5,6 +5,7 @@ import net.cozymc.main.CozyClaimsPlugin
 import net.cozymc.main.chunk.Adjacency
 import net.cozymc.main.chunk.AdjacentChunk
 import net.cozymc.main.file.DataConfig
+import net.cozymc.main.file.MainConfig
 import org.bukkit.Chunk
 import org.bukkit.Location
 import org.bukkit.Particle
@@ -28,7 +29,7 @@ fun Player.playParticlesAroundClaim(claim: Claim) {
         chunk.getAdjacentChunks().forEach { adjacentChunk ->
             if (!adjacentChunk.chunk.isClaimOf(uniqueId)) {
                 adjacentChunk.getBorderBlocksAtHeightRange(location.blockY - 5..location.blockY + 5)
-                    .forEach { spawnParticle(Particle.VILLAGER_HAPPY, it.location, 3, 0.0, 0.0, 0.0) }
+                    .forEach { spawnParticle(MainConfig.getClaimParticleEffectType(), it.location, 1, 0.0, 0.0, 0.0) }
             }
         }
     }

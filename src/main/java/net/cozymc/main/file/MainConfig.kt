@@ -2,6 +2,7 @@ package net.cozymc.main.file
 
 import net.cozymc.main.CONFIG_FILE_NAME
 import net.cozymc.main.DATA_FOLDER_PATH
+import org.bukkit.Particle
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.Player
 import java.io.File
@@ -12,6 +13,10 @@ object MainConfig {
 
     fun getClaimCost(): Int {
         return config.getInt("claim.cost")
+    }
+
+    fun getClaimParticleEffectType(): Particle {
+        return Particle.valueOf(config.getString("claim.particleType", Particle.VILLAGER_HAPPY.name))
     }
 
     fun getChunkClaimSuccessMessage(): String {
