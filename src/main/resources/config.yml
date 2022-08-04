@@ -1,5 +1,6 @@
 claim:
   cost: 25000
+  particleType: "villager_happy"
 
 message:
   chunkClaimSuccess: "Claim successful."
