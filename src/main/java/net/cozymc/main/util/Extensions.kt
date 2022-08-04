@@ -6,6 +6,7 @@ import net.cozymc.main.chunk.Adjacency
 import net.cozymc.main.chunk.AdjacentChunk
 import net.cozymc.main.file.DataConfig
 import org.bukkit.Chunk
+import org.bukkit.Location
 import org.bukkit.Particle
 import org.bukkit.entity.Player
 import java.util.*
@@ -26,7 +27,7 @@ fun Player.playParticlesAroundClaim(claim: Claim) {
     claim.forEachChunk { chunk ->
         chunk.getAdjacentChunks().forEach { adjacentChunk ->
             if (!adjacentChunk.chunk.isClaimOf(uniqueId)) {
-                adjacentChunk.borderBlocks.filter { it.y > location.y - 10 && it.y < location.y + 10 }
+                adjacentChunk.getBorderBlocksAtHeightRange(location.blockY - 5..location.blockY + 5)
                     .forEach { spawnParticle(Particle.VILLAGER_HAPPY, it.location, 3, 0.0, 0.0, 0.0) }
             }
         }

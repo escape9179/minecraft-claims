@@ -7,7 +7,7 @@ import org.bukkit.entity.Player
 typealias PlayerTask = (Player) -> Unit
 
 object OnlinePlayerIteratorThread {
-    val tasks = mutableMapOf<Long, MutableList<PlayerTask>>()
+    private val tasks = mutableMapOf<Long, MutableList<PlayerTask>>()
     var count = 0
 
     init {
