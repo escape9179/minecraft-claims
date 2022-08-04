@@ -42,6 +42,10 @@ class Claim(val owner: UUID) : ConfigurationSerializable {
         return members.remove(player.uniqueId)
     }
 
+    fun forEachChunk(func: (Chunk) -> Unit) {
+        chunks.forEach(func)
+    }
+
     override fun serialize(): MutableMap<String, Any> {
         return mutableMapOf(
             "owner" to owner.toString(),
