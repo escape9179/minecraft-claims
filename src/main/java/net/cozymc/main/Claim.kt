@@ -1,6 +1,8 @@
 package net.cozymc.main
 
 import net.cozymc.main.file.DataConfig
+import net.cozymc.main.util.BlockLocation
+import org.bukkit.BlockChangeDelegate
 import org.bukkit.Bukkit
 import org.bukkit.Chunk
 import org.bukkit.Location
@@ -46,6 +48,14 @@ class Claim(val owner: UUID) : ConfigurationSerializable {
         chunks.forEach(func)
     }
 
+    fun containsLocation(location: Location): Boolean {
+        return chunks.any { location.chunk == it }
+    }
+
+    fun containsLocation(location: BlockLocation): Boolean {
+        return chunks.any { location.toBukkitLocation().chunk == it }
+    }
+
     override fun serialize(): MutableMap<String, Any> {
         return mutableMapOf(
             "owner" to owner.toString(),
@@ -57,6 +67,14 @@ class Claim(val owner: UUID) : ConfigurationSerializable {
         fun isClaimed(location: Location): Boolean {
             DataConfig.getClaims().forEach { if (it.chunks.contains(location.chunk)) return true }
             return false
+        }
+
+        fun getClaimAt(location: Location): Claim? {
+            return DataConfig.getClaims().firstOrNull { it.containsLocation(location) }
+        }
+
+        fun getClaimAt(location: BlockLocation): Claim? {
+            return DataConfig.getClaims().firstOrNull { it.containsLocation(location) }
         }
 
         fun getOrCreate(owner: UUID, chunk: Chunk): Claim {

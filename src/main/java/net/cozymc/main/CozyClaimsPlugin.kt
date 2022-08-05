@@ -7,9 +7,8 @@ import net.cozymc.main.command.ClaimAddMemberCommand
 import net.cozymc.main.command.ClaimCommand
 import net.cozymc.main.command.ClaimRemoveMemberCommand
 import net.cozymc.main.command.ClaimUnclaimCommand
-import net.cozymc.main.util.getClaim
-import net.cozymc.main.util.isInOwnClaim
-import net.cozymc.main.util.playParticlesAroundClaim
+import net.cozymc.main.util.*
+import org.bukkit.Bukkit
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.configuration.serialization.ConfigurationSerialization
@@ -43,9 +42,8 @@ class CozyClaimsPlugin : JavaPlugin() {
 
         ConfigurationSerialization.registerClass(Claim::class.java)
 
-        OnlinePlayerIteratorThread.addTask(20) { player ->
-            if (player.isInOwnClaim()) player.getClaim()?.let { player.playParticlesAroundClaim(it) }
-        }
+        createParticleSpawnTask()
+        createTitleSendTask()
 
         logger.info("$name enabled.")
     }
@@ -56,6 +54,24 @@ class CozyClaimsPlugin : JavaPlugin() {
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
         return CommandDispatcher.onCommand(sender, command, label, args!!)
+    }
+
+    fun createParticleSpawnTask() {
+        OnlinePlayerIteratorThread.addTask(20) { player ->
+            if (player.isInOwnClaim()) player.getClaim()?.let { player.playParticlesAroundClaim(it) }
+        }
+    }
+
+    fun createTitleSendTask() {
+        OnlinePlayerIteratorThread.addTask(5) {
+            val previousClaim = it.getPreviousOccupyingClaim()
+            val currentClaim = it.getOccupyingClaim()
+            if (previousClaim != currentClaim) {
+                if (currentClaim == null) it.sendTitle("Leaving", "${previousClaim?.owner?.getOfflinePlayer()?.name}'s claim", 20, 20, 20)
+                else it.sendTitle("Entering", "${currentClaim.owner.getOfflinePlayer().name}'s claim", 20, 20, 20)
+            }
+            it.lastBlockLocation = it.blockLocation
+        }
     }
 
     companion object {
