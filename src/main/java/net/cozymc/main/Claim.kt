@@ -18,7 +18,7 @@ class Claim(val owner: UUID) : ConfigurationSerializable {
         chunks.add(chunk)
     }
 
-    constructor(map: Map<String, Object>) : this(UUID.fromString(map["owner"].toString())) {
+    constructor(map: Map<String, *>) : this(UUID.fromString(map["owner"].toString())) {
         chunks.addAll(
             (map["chunks"] as List<String>)
             .map { it.split(",") }
