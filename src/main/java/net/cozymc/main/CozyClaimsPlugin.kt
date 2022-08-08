@@ -3,6 +3,10 @@ package net.cozymc.main
 import com.earth2me.essentials.Essentials
 import net.cozymc.api.OnlinePlayerIteratorThread
 import net.cozymc.api.command.CommandDispatcher
+import net.cozymc.main.command.*
+import net.cozymc.main.util.getClaim
+import net.cozymc.main.util.isInOwnClaim
+import net.cozymc.main.util.playParticlesAroundClaim
 import net.cozymc.main.command.ClaimAddMemberCommand
 import net.cozymc.main.command.ClaimCommand
 import net.cozymc.main.command.ClaimRemoveMemberCommand
@@ -39,6 +43,7 @@ class CozyClaimsPlugin : JavaPlugin() {
         CommandDispatcher.registerCommand(ClaimAddMemberCommand())
         CommandDispatcher.registerCommand(ClaimRemoveMemberCommand())
         CommandDispatcher.registerCommand(ClaimUnclaimCommand())
+        CommandDispatcher.registerCommand(ClaimConvertCommand())
 
         ConfigurationSerialization.registerClass(Claim::class.java)
 
@@ -77,5 +82,9 @@ class CozyClaimsPlugin : JavaPlugin() {
     companion object {
         lateinit var instance: CozyClaimsPlugin
         lateinit var essentials: Essentials
+
+        fun log(message: String) {
+            instance.logger.info(message)
+        }
     }
 }

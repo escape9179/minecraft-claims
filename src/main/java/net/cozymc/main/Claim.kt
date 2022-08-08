@@ -20,7 +20,11 @@ class Claim(val owner: UUID) : ConfigurationSerializable {
         chunks.add(chunk)
     }
 
-    constructor(map: Map<String, Object>) : this(UUID.fromString(map["owner"].toString())) {
+    constructor(owner: UUID, chunks: Set<Chunk>) : this(owner) {
+        this.chunks.addAll(chunks)
+    }
+
+    constructor(map: Map<String, *>) : this(UUID.fromString(map["owner"].toString())) {
         chunks.addAll(
             (map["chunks"] as List<String>)
             .map { it.split(",") }
@@ -30,6 +34,10 @@ class Claim(val owner: UUID) : ConfigurationSerializable {
 
     fun addChunk(chunk: Chunk) {
         chunks.add(chunk)
+    }
+
+    fun addChunks(chunks: Set<Chunk>) {
+        this.chunks.addAll(chunks)
     }
 
     fun removeChunk(chunk: Chunk) {
@@ -79,6 +87,10 @@ class Claim(val owner: UUID) : ConfigurationSerializable {
 
         fun getOrCreate(owner: UUID, chunk: Chunk): Claim {
             return DataConfig.getClaim(owner)?.also { it.addChunk(chunk) } ?: return Claim(owner, chunk)
+        }
+
+        fun getOrCreate(owner: UUID, chunks: Set<Chunk>): Claim {
+            return DataConfig.getClaim(owner)?.also { it.addChunks(chunks) } ?: return Claim(owner, chunks)
         }
     }
 }
