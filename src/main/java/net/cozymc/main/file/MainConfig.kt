@@ -16,7 +16,7 @@ object MainConfig {
     }
 
     fun getClaimParticleEffectType(): Particle {
-        return Particle.valueOf(config.getString("claim.particleType", Particle.VILLAGER_HAPPY.name))
+        return Particle.valueOf(config.getString("claim.particleType", Particle.VILLAGER_HAPPY.name).uppercase())
     }
 
     fun getChunkClaimSuccessMessage(): String {

@@ -3,13 +3,16 @@ package net.cozymc.main
 import com.earth2me.essentials.Essentials
 import net.cozymc.api.OnlinePlayerIteratorThread
 import net.cozymc.api.command.CommandDispatcher
+import net.cozymc.main.command.*
+import net.cozymc.main.util.getClaim
+import net.cozymc.main.util.isInOwnClaim
+import net.cozymc.main.util.playParticlesAroundClaim
 import net.cozymc.main.command.ClaimAddMemberCommand
 import net.cozymc.main.command.ClaimCommand
 import net.cozymc.main.command.ClaimRemoveMemberCommand
 import net.cozymc.main.command.ClaimUnclaimCommand
-import net.cozymc.main.util.getClaim
-import net.cozymc.main.util.isInOwnClaim
-import net.cozymc.main.util.playParticlesAroundClaim
+import net.cozymc.main.util.*
+import org.bukkit.Bukkit
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.configuration.serialization.ConfigurationSerialization
@@ -40,12 +43,12 @@ class CozyClaimsPlugin : JavaPlugin() {
         CommandDispatcher.registerCommand(ClaimAddMemberCommand())
         CommandDispatcher.registerCommand(ClaimRemoveMemberCommand())
         CommandDispatcher.registerCommand(ClaimUnclaimCommand())
+        CommandDispatcher.registerCommand(ClaimConvertCommand())
 
         ConfigurationSerialization.registerClass(Claim::class.java)
 
-        OnlinePlayerIteratorThread.addTask(20) { player ->
-            if (player.isInOwnClaim()) player.getClaim()?.let { player.playParticlesAroundClaim(it) }
-        }
+        createParticleSpawnTask()
+        createTitleSendTask()
 
         logger.info("$name enabled.")
     }
@@ -58,8 +61,30 @@ class CozyClaimsPlugin : JavaPlugin() {
         return CommandDispatcher.onCommand(sender, command, label, args!!)
     }
 
+    fun createParticleSpawnTask() {
+        OnlinePlayerIteratorThread.addTask(20) { player ->
+            if (player.isInOwnClaim()) player.getClaim()?.let { player.playParticlesAroundClaim(it) }
+        }
+    }
+
+    fun createTitleSendTask() {
+        OnlinePlayerIteratorThread.addTask(5) {
+            val previousClaim = it.getPreviousOccupyingClaim()
+            val currentClaim = it.getOccupyingClaim()
+            if (previousClaim != currentClaim) {
+                if (currentClaim == null) it.sendTitle("Leaving", "${previousClaim?.owner?.getOfflinePlayer()?.name}'s claim", 20, 20, 20)
+                else it.sendTitle("Entering", "${currentClaim.owner.getOfflinePlayer().name}'s claim", 20, 20, 20)
+            }
+            it.lastBlockLocation = it.blockLocation
+        }
+    }
+
     companion object {
         lateinit var instance: CozyClaimsPlugin
         lateinit var essentials: Essentials
+
+        fun log(message: String) {
+            instance.logger.info(message)
+        }
     }
 }

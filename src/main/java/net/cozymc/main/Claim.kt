@@ -1,6 +1,8 @@
 package net.cozymc.main
 
 import net.cozymc.main.file.DataConfig
+import net.cozymc.main.util.BlockLocation
+import org.bukkit.BlockChangeDelegate
 import org.bukkit.Bukkit
 import org.bukkit.Chunk
 import org.bukkit.Location
@@ -18,6 +20,10 @@ class Claim(val owner: UUID) : ConfigurationSerializable {
         chunks.add(chunk)
     }
 
+    constructor(owner: UUID, chunks: Set<Chunk>) : this(owner) {
+        this.chunks.addAll(chunks)
+    }
+
     constructor(map: Map<String, *>) : this(UUID.fromString(map["owner"].toString())) {
         chunks.addAll(
             (map["chunks"] as List<String>)
@@ -28,6 +34,10 @@ class Claim(val owner: UUID) : ConfigurationSerializable {
 
     fun addChunk(chunk: Chunk) {
         chunks.add(chunk)
+    }
+
+    fun addChunks(chunks: Set<Chunk>) {
+        this.chunks.addAll(chunks)
     }
 
     fun removeChunk(chunk: Chunk) {
@@ -46,6 +56,14 @@ class Claim(val owner: UUID) : ConfigurationSerializable {
         chunks.forEach(func)
     }
 
+    fun containsLocation(location: Location): Boolean {
+        return chunks.any { location.chunk == it }
+    }
+
+    fun containsLocation(location: BlockLocation): Boolean {
+        return chunks.any { location.toBukkitLocation().chunk == it }
+    }
+
     override fun serialize(): MutableMap<String, Any> {
         return mutableMapOf(
             "owner" to owner.toString(),
@@ -59,8 +77,20 @@ class Claim(val owner: UUID) : ConfigurationSerializable {
             return false
         }
 
+        fun getClaimAt(location: Location): Claim? {
+            return DataConfig.getClaims().firstOrNull { it.containsLocation(location) }
+        }
+
+        fun getClaimAt(location: BlockLocation): Claim? {
+            return DataConfig.getClaims().firstOrNull { it.containsLocation(location) }
+        }
+
         fun getOrCreate(owner: UUID, chunk: Chunk): Claim {
             return DataConfig.getClaim(owner)?.also { it.addChunk(chunk) } ?: return Claim(owner, chunk)
+        }
+
+        fun getOrCreate(owner: UUID, chunks: Set<Chunk>): Claim {
+            return DataConfig.getClaim(owner)?.also { it.addChunks(chunks) } ?: return Claim(owner, chunks)
         }
     }
 }
