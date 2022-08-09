@@ -2,6 +2,8 @@ package net.cozymc.main.file
 
 import net.cozymc.main.CONFIG_FILE_NAME
 import net.cozymc.main.DATA_FOLDER_PATH
+import net.cozymc.main.claim.ClaimMember
+import net.cozymc.main.claim.MemberLevel
 import org.bukkit.Particle
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.Player
@@ -45,6 +47,22 @@ object MainConfig {
 
     fun getRemoveMemberSuccessMessage(name: String): String {
         return String.format(config.getString("message.removeMemberSuccess"), name)
+    }
+
+    fun getRemoveMemberFailureSelfMessage(): String {
+        return config.getString("message.removeMemberFailureSelf")
+    }
+
+    fun getMemberChangeLevelSuccessMessage(name: String, level: MemberLevel): String {
+        return String.format(config.getString("message.memberChangeLevelSuccessMessage"), name, level.name.lowercase())
+    }
+
+    fun getMemberChangeLevelFailureMessage(name: String, level: MemberLevel): String {
+        return String.format(config.getString("message.memberChangeLevelFailureMessage"), name, level.name.lowercase())
+    }
+
+    fun getNotMemberOfClaimMessage(): String {
+        return config.getString("message.notMemberOfClaim")
     }
 
     fun getUnknownPlayerMessage(): String {

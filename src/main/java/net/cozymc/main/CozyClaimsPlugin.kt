@@ -3,16 +3,16 @@ package net.cozymc.main
 import com.earth2me.essentials.Essentials
 import net.cozymc.api.OnlinePlayerIteratorThread
 import net.cozymc.api.command.CommandDispatcher
+import net.cozymc.main.claim.Claim
 import net.cozymc.main.command.*
 import net.cozymc.main.util.getClaim
 import net.cozymc.main.util.isInOwnClaim
 import net.cozymc.main.util.playParticlesAroundClaim
-import net.cozymc.main.command.ClaimAddMemberCommand
+import net.cozymc.main.command.MemberAddCommand
 import net.cozymc.main.command.ClaimCommand
 import net.cozymc.main.command.ClaimRemoveMemberCommand
 import net.cozymc.main.command.ClaimUnclaimCommand
 import net.cozymc.main.util.*
-import org.bukkit.Bukkit
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.configuration.serialization.ConfigurationSerialization
@@ -40,10 +40,12 @@ class CozyClaimsPlugin : JavaPlugin() {
         }
 
         CommandDispatcher.registerCommand(ClaimCommand())
-        CommandDispatcher.registerCommand(ClaimAddMemberCommand())
+        CommandDispatcher.registerCommand(MemberAddCommand())
         CommandDispatcher.registerCommand(ClaimRemoveMemberCommand())
         CommandDispatcher.registerCommand(ClaimUnclaimCommand())
         CommandDispatcher.registerCommand(ClaimConvertCommand())
+        CommandDispatcher.registerCommand(MemberPromoteCommand())
+        CommandDispatcher.registerCommand(MemberDemoteCommand())
 
         ConfigurationSerialization.registerClass(Claim::class.java)
 

@@ -7,8 +7,8 @@ import net.cozymc.main.file.MainConfig
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 
-class ClaimAddMemberCommand : BasicCommand<Player>(
-    "add", "cozyclaims.claim.add",
+class MemberAddCommand : BasicCommand<Player>(
+    "add", "cozyclaims.member.add",
     1..1,
     target = SenderTarget.PLAYER,
     parentCommand = "claim",
@@ -19,11 +19,15 @@ class ClaimAddMemberCommand : BasicCommand<Player>(
             return true
         }
 
-        if (DataConfig.getClaim(sender.uniqueId)?.addMember(member) ?: run {
+        val claim = DataConfig.loadClaim(sender.uniqueId) ?: run {
             sender.sendMessage(MainConfig.getNotClaimOwnerMessage())
             return true
-        }) sender.sendMessage(MainConfig.getAddMemberSuccessMessage(member.name))
-        else sender.sendMessage(MainConfig.getPersonAlreadyMemberMessage())
+        }
+
+        if (claim.addMember(member)) {
+            sender.sendMessage(MainConfig.getAddMemberSuccessMessage(member.name))
+            DataConfig.saveClaim(claim)
+        } else sender.sendMessage(MainConfig.getPersonAlreadyMemberMessage())
 
         return true
     }

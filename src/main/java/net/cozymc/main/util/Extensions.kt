@@ -1,6 +1,6 @@
 package net.cozymc.main.util
 
-import net.cozymc.main.Claim
+import net.cozymc.main.claim.Claim
 import net.cozymc.main.CozyClaimsPlugin
 import net.cozymc.main.chunk.Adjacency
 import net.cozymc.main.chunk.AdjacentChunk
@@ -16,7 +16,7 @@ fun Player.getBalance(): Int {
 }
 
 fun Player.isInOwnClaim(): Boolean {
-    return DataConfig.getClaim(uniqueId)?.chunks?.any { location.chunk == it } ?: false
+    return DataConfig.loadClaim(uniqueId)?.chunks?.any { location.chunk == it } ?: false
 }
 
 fun Player.getOccupyingClaim(): Claim? {
@@ -28,7 +28,11 @@ fun Player.getPreviousOccupyingClaim(): Claim? {
 }
 
 fun Player.getClaim(): Claim? {
-    return DataConfig.getClaim(uniqueId)
+    return DataConfig.loadClaim(uniqueId)
+}
+
+fun Player.hasClaim(): Boolean {
+    return DataConfig.getClaims().any { it == this.uniqueId }
 }
 
 private val lastBlockLocationMap = mutableMapOf<UUID, BlockLocation>()
@@ -62,5 +66,5 @@ fun Chunk.getAdjacentChunks(): List<AdjacentChunk> {
 }
 
 fun Chunk.isClaimOf(uuid: UUID): Boolean {
-    return DataConfig.getClaim(uuid)?.chunks?.contains(this) ?: false
+    return DataConfig.loadClaim(uuid)?.chunks?.contains(this) ?: false
 }

@@ -2,7 +2,7 @@ package net.cozymc.main.command
 
 import logan.api.command.BasicCommand
 import logan.api.command.SenderTarget
-import net.cozymc.main.Claim
+import net.cozymc.main.claim.Claim
 import net.cozymc.main.CozyClaimsPlugin
 import net.cozymc.main.file.DataConfig
 import net.cozymc.main.util.GriefPreventionClaim
