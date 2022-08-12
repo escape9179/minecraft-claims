@@ -8,7 +8,7 @@ import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 
 class ClaimRemoveMemberCommand : BasicCommand<Player>(
-    "remove", "cozyclaims.remove",
+    "remove", "cozyclaims.member.remove",
     1..1,
     target = SenderTarget.PLAYER,
     parentCommand = "claim",
@@ -18,11 +18,16 @@ class ClaimRemoveMemberCommand : BasicCommand<Player>(
             sender.sendMessage(MainConfig.getUnknownPlayerMessage())
             return true
         }
-        DataConfig.getClaim(sender.uniqueId)?.removeMember(member) ?: run {
+        val claim = DataConfig.loadClaim(sender.uniqueId) ?: run {
             sender.sendMessage(MainConfig.getNotClaimOwnerMessage())
             return true
         }
-        sender.sendMessage(MainConfig.getRemoveMemberSuccessMessage(member.name))
+
+        if (member.uniqueId == sender.uniqueId) sender.sendMessage(MainConfig.getRemoveMemberFailureSelfMessage())
+        else {
+            claim.removeMember(member)
+            sender.sendMessage(MainConfig.getRemoveMemberSuccessMessage(member.name))
+        }
         return true
     }
 }
