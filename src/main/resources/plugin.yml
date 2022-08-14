@@ -1,0 +1,17 @@
+name: Claims
+version: '${project.version}'
+main: net.cozymc.main.CozyClaimsPlugin
+api-version: 1.13
+depend: [WorldGuard, Essentials]
+author: escape9179
+description: Inspired by ManaCube's claim plugin.
+commands:
+  claim:
+    description: Claim a chunk of land. A
+permissions:
+  cozyclaims.*:
+    description: Access all plugin capabilities and commands.
+  cozyclaims.claim:
+    description: Claim a chunk of land.
+  cozyclaims.reload:
+    description: Reload the configuration.

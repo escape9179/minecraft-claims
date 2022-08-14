@@ -1,0 +1,21 @@
+claim:
+  cost: 25000
+  particleType: "villager_happy"
+
+message:
+  chunkClaimSuccess: "Claim successful."
+  chunkClaimFailureMoney: "You need %d to make a claim."
+  chunkClaimFailureClaimed: "This chunk is already claimed."
+  chunkClaimFailureRegion: "This chunk is protected."
+  notClaimOwner: "You don't have a claim."
+  addMemberSuccess: "Added %s to your claim."
+  removeMemberSuccess: "Removed %s from your claim."
+  removeMemberFailureSelf: "You cannot remove yourself from your claim."
+  unknownPlayer: "Unknown player."
+  claimRemoveSuccess: "Unclaimed %d chunks."
+  usageSpecifyClaimName: "You must specify a claim name."
+  hasNoClaim: "That player doesn't have a claim."
+  claimRemoveSuccessOther: "Removed %s's claim of %d chunks."
+  personAlreadyMember: "That person is already a member."
+  memberChangeLevelSuccess: "Changed %s's level to %s."
+  memberChangeLevelFailure: "%s is already level %s."
