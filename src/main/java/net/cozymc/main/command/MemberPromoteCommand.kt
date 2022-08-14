@@ -3,7 +3,7 @@ package net.cozymc.main.command
 import logan.api.command.BasicCommand
 import logan.api.command.SenderTarget
 import net.cozymc.main.file.MainConfig
-import net.cozymc.main.util.getClaim
+import net.cozymc.main.util.loadClaim
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 
@@ -17,7 +17,7 @@ class MemberPromoteCommand : BasicCommand<Player>(
             return true
         }
 
-        val claim = sender.getClaim() ?: run {
+        val claim = sender.loadClaim() ?: run {
             sender.sendMessage(MainConfig.getNotClaimOwnerMessage())
             return true
         }

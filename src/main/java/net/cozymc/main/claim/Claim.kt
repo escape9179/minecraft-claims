@@ -76,6 +76,10 @@ class Claim(val owner: UUID) : ConfigurationSerializable {
         )
     }
 
+    override fun equals(other: Any?): Boolean {
+        return other is Claim && other.owner == owner
+    }
+
     companion object {
         fun isClaimed(location: Location): Boolean {
             DataConfig.loadClaims().forEach { if (it.chunks.contains(location.chunk)) return true }

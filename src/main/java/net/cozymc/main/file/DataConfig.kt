@@ -11,7 +11,7 @@ object DataConfig {
     private val file = File(DATA_FOLDER_PATH, DATA_FILE_NAME)
     private val config = YamlConfiguration.loadConfiguration(file)
 
-    fun getClaims(): List<UUID> {
+    fun getClaimOwners(): List<UUID> {
         return config.getKeys(false).map(UUID::fromString)
     }
 

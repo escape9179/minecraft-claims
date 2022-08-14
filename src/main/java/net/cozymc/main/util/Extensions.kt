@@ -19,6 +19,14 @@ fun Player.isInOwnClaim(): Boolean {
     return DataConfig.loadClaim(uniqueId)?.chunks?.any { location.chunk == it } ?: false
 }
 
+fun Player.isInTrustedClaim(): Boolean {
+    return getTrustedClaims().any { getOccupyingClaim() == it }
+}
+
+fun Player.getTrustedClaims(): List<Claim?> {
+    return DataConfig.loadClaims().filter { uniqueId in it.members }.toList()
+}
+
 fun Player.getOccupyingClaim(): Claim? {
     return Claim.getClaimAt(location)
 }
@@ -27,12 +35,12 @@ fun Player.getPreviousOccupyingClaim(): Claim? {
     return Claim.getClaimAt(lastBlockLocation)
 }
 
-fun Player.getClaim(): Claim? {
+fun Player.loadClaim(): Claim? {
     return DataConfig.loadClaim(uniqueId)
 }
 
 fun Player.hasClaim(): Boolean {
-    return DataConfig.getClaims().any { it == this.uniqueId }
+    return DataConfig.getClaimOwners().any { it == this.uniqueId }
 }
 
 private val lastBlockLocationMap = mutableMapOf<UUID, BlockLocation>()

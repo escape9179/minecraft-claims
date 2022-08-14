@@ -5,7 +5,6 @@ import net.cozymc.api.OnlinePlayerIteratorThread
 import net.cozymc.api.command.CommandDispatcher
 import net.cozymc.main.claim.Claim
 import net.cozymc.main.command.*
-import net.cozymc.main.util.getClaim
 import net.cozymc.main.util.isInOwnClaim
 import net.cozymc.main.util.playParticlesAroundClaim
 import net.cozymc.main.command.MemberAddCommand
@@ -65,7 +64,7 @@ class CozyClaimsPlugin : JavaPlugin() {
 
     fun createParticleSpawnTask() {
         OnlinePlayerIteratorThread.addTask(20) { player ->
-            if (player.isInOwnClaim()) player.getClaim()?.let { player.playParticlesAroundClaim(it) }
+            if (player.isInOwnClaim() || player.isInTrustedClaim()) player.getOccupyingClaim()?.let { player.playParticlesAroundClaim(it) }
         }
     }
 

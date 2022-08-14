@@ -32,6 +32,8 @@ class ClaimMemberSet() : ConfigurationSerializable {
         return memberSet.map { func.invoke(it) }
     }
 
+    operator fun contains(uuid: UUID): Boolean = memberSet.any { it.uuid == uuid }
+
     override fun serialize(): MutableMap<String, Any> {
         return mutableMapOf(
             "members" to memberSet.map { it.uuid.toString() }
