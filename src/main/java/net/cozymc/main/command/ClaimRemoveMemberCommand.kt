@@ -18,7 +18,8 @@ class ClaimRemoveMemberCommand : BasicCommand<Player>(
             sender.sendMessage(MainConfig.getUnknownPlayerMessage())
             return true
         }
-        val claim = DataConfig.loadClaim(sender.uniqueId) ?: run {
+        val claim = DataConfig.loadClaim(sender.uniqueId)
+        if (claim == null || claim.owner != sender.uniqueId) {
             sender.sendMessage(MainConfig.getNotClaimOwnerMessage())
             return true
         }
