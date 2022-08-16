@@ -10,7 +10,7 @@ object OnlinePlayerIteratorThread {
     private val tasks = mutableMapOf<Long, MutableList<PlayerTask>>()
     var count = 0
 
-    init {
+    fun start() {
         Bukkit.getScheduler().runTaskTimer(CozyClaimsPlugin.instance, {
             tasks.entries.forEach { entry ->
                 if (count % entry.key == 0L)

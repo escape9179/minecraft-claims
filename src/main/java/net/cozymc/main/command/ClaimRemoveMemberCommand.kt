@@ -26,6 +26,7 @@ class ClaimRemoveMemberCommand : BasicCommand<Player>(
         if (member.uniqueId == sender.uniqueId) sender.sendMessage(MainConfig.getRemoveMemberFailureSelfMessage())
         else {
             claim.removeMember(member)
+            DataConfig.saveClaim(claim)
             sender.sendMessage(MainConfig.getRemoveMemberSuccessMessage(member.name))
         }
         return true
