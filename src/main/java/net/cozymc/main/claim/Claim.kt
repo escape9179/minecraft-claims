@@ -13,6 +13,7 @@ import java.util.UUID
 class Claim(val owner: UUID) : ConfigurationSerializable {
     val chunks = mutableSetOf<Chunk>()
     val members = ClaimMemberSet()
+    val trustees = mutableSetOf<UUID>()
 
     init {
         members.add(owner)
@@ -50,6 +51,14 @@ class Claim(val owner: UUID) : ConfigurationSerializable {
 
     fun addMember(player: Player): Boolean {
         return members.add(player.uniqueId)
+    }
+
+    fun addTrustee(): Boolean {
+        TODO()
+    }
+
+    fun removeTrustee(): Boolean {
+        TODO()
     }
 
     fun removeMember(player: Player): Boolean {
