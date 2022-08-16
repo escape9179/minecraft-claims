@@ -54,11 +54,11 @@ object MainConfig {
     }
 
     fun getMemberChangeLevelSuccessMessage(name: String, level: MemberLevel): String {
-        return String.format(config.getString("message.memberChangeLevelSuccessMessage"), name, level.name.lowercase())
+        return String.format(config.getString("message.memberChangeLevelSuccess"), name, level.name.lowercase())
     }
 
     fun getMemberChangeLevelFailureMessage(name: String, level: MemberLevel): String {
-        return String.format(config.getString("message.memberChangeLevelFailureMessage"), name, level.name.lowercase())
+        return String.format(config.getString("message.memberChangeLevelFailure"), name, level.name.lowercase())
     }
 
     fun getNotMemberOfClaimMessage(): String {
