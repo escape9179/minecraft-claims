@@ -9,7 +9,7 @@ import net.cozymc.main.util.isInOwnClaim
 import net.cozymc.main.util.playParticlesAroundClaim
 import net.cozymc.main.command.MemberAddCommand
 import net.cozymc.main.command.ClaimCommand
-import net.cozymc.main.command.ClaimRemoveMemberCommand
+import net.cozymc.main.command.RemoveMemberCommand
 import net.cozymc.main.command.ClaimUnclaimCommand
 import net.cozymc.main.util.*
 import org.bukkit.command.Command
@@ -40,7 +40,7 @@ class CozyClaimsPlugin : JavaPlugin() {
 
         CommandDispatcher.registerCommand(ClaimCommand())
         CommandDispatcher.registerCommand(MemberAddCommand())
-        CommandDispatcher.registerCommand(ClaimRemoveMemberCommand())
+        CommandDispatcher.registerCommand(RemoveMemberCommand())
         CommandDispatcher.registerCommand(ClaimUnclaimCommand())
         CommandDispatcher.registerCommand(ClaimConvertCommand())
         CommandDispatcher.registerCommand(MemberPromoteCommand())

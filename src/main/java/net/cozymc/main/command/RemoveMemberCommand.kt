@@ -7,7 +7,7 @@ import net.cozymc.main.file.MainConfig
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 
-class ClaimRemoveMemberCommand : BasicCommand<Player>(
+class RemoveMemberCommand : BasicCommand<Player>(
     "remove", "cozyclaims.member.remove",
     1..1,
     target = SenderTarget.PLAYER,
