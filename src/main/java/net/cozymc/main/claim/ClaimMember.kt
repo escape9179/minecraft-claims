@@ -9,7 +9,7 @@ class ClaimMember(val uuid: UUID) {
     var level = MemberLevel.DEFAULT
 
     fun promote(): Boolean {
-        if (level.ordinal >= MemberLevel.values().size) return false
+        if (level.ordinal >= MemberLevel.values().size - 1) return false
         level = MemberLevel.values()[level.ordinal + 1]
         return true
     }
