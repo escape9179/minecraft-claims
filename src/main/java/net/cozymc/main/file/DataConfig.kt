@@ -22,7 +22,7 @@ object DataConfig {
     }
 
     fun loadClaim(owner: UUID): Claim? {
-        return config.getSerializable("$owner.claim", Claim::class.java)
+        return loadClaims().firstOrNull { it.owner == owner || it.owner in it.members }
     }
 
     fun saveClaim(claim: Claim) {
