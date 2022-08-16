@@ -51,6 +51,8 @@ class CozyClaimsPlugin : JavaPlugin() {
         createParticleSpawnTask()
         createTitleSendTask()
 
+        OnlinePlayerIteratorThread.start()
+
         logger.info("$name enabled.")
     }
 

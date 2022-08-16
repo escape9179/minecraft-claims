@@ -1,8 +1,8 @@
 package net.cozymc.main.file
 
-import net.cozymc.main.claim.Claim
 import net.cozymc.main.DATA_FILE_NAME
 import net.cozymc.main.DATA_FOLDER_PATH
+import net.cozymc.main.claim.Claim
 import org.bukkit.configuration.file.YamlConfiguration
 import java.io.File
 import java.util.*
