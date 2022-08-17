@@ -45,6 +45,8 @@ class CozyClaimsPlugin : JavaPlugin() {
         CommandDispatcher.registerCommand(ClaimConvertCommand())
         CommandDispatcher.registerCommand(MemberPromoteCommand())
         CommandDispatcher.registerCommand(MemberDemoteCommand())
+        CommandDispatcher.registerCommand(TrustCommand())
+        CommandDispatcher.registerCommand(DistrustCommand())
 
         ConfigurationSerialization.registerClass(Claim::class.java)
 
