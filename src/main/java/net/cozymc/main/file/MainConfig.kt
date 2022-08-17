@@ -41,6 +41,18 @@ object MainConfig {
         return config.getString("message.notClaimOwner")
     }
 
+    fun getAddTrusteeSuccessMessage(name: String): String {
+        return String.format(config.getString("message.addTrusteeSuccess"), name)
+    }
+
+    fun getRemoveTrusteeSuccessMessage(name: String): String {
+        return String.format(config.getString("message.removeTrusteeSuccess"), name)
+    }
+
+    fun getPersonAlreadyTrustedMessage(): String {
+        return config.getString("message.personAlreadyTrusted")
+    }
+
     fun getAddMemberSuccessMessage(name: String): String {
         return String.format(config.getString("message.addMemberSuccess"), name)
     }
