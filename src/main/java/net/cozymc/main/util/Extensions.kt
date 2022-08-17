@@ -39,7 +39,7 @@ fun Player.loadClaim(): Claim? {
     return DataConfig.loadClaim(uniqueId)
 }
 
-fun Player.hasClaim(): Boolean {
+fun Player.isClaimOwner(): Boolean {
     return DataConfig.getClaimOwners().any { it == this.uniqueId }
 }
 
