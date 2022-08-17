@@ -54,12 +54,12 @@ class Claim(val owner: UUID) : ConfigurationSerializable {
         return members.add(player.uniqueId)
     }
 
-    fun addTrustee(): Boolean {
-        TODO()
+    fun addTrustee(player: Player): Boolean {
+        return trustees.add(player.uniqueId)
     }
 
-    fun removeTrustee(): Boolean {
-        TODO()
+    fun removeTrustee(player: Player): Boolean {
+        return trustees.remove(player.uniqueId)
     }
 
     fun removeMember(player: Player): Boolean {
