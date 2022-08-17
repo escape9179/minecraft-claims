@@ -77,6 +77,10 @@ object MainConfig {
         return config.getString("message.notMemberOfClaim")
     }
 
+    fun getNotTrusteeOfClaimMessage(): String {
+        return config.getString("message.notTrusteeOfClaim")
+    }
+
     fun getUnknownPlayerMessage(): String {
         return config.getString("message.unknownPlayer")
     }
