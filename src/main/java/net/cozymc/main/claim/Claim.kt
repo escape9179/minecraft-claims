@@ -29,6 +29,7 @@ class Claim(val owner: UUID) : ConfigurationSerializable {
 
     constructor(map: Map<String, *>) : this(UUID.fromString(map["owner"].toString())) {
         members.addAll((map["members"] as List<*>).map(Any?::toString).map(UUID::fromString))
+        trustees.addAll((map["trustees"] as List<*>).map(Any?::toString).map(UUID::fromString))
         chunks.addAll(
             (map["chunks"] as List<*>)
                 .map(Any?::toString)
@@ -81,6 +82,7 @@ class Claim(val owner: UUID) : ConfigurationSerializable {
         return mutableMapOf(
             "owner" to owner.toString(),
             "members" to members.map { it.uuid.toString() },
+            "trustees" to trustees.map(UUID::toString),
             "chunks" to chunks.map { "${it.world.name},${it.x},${it.z}" }
         )
     }
