@@ -24,7 +24,7 @@ fun Player.isInTrustedClaim(): Boolean {
 }
 
 fun Player.getTrustedClaims(): List<Claim?> {
-    return DataConfig.loadClaims().filter { uniqueId in it.members }.toList()
+    return DataConfig.loadClaims().filter { uniqueId in it.trustees }.toList()
 }
 
 fun Player.getOccupyingClaim(): Claim? {
@@ -39,7 +39,7 @@ fun Player.loadClaim(): Claim? {
     return DataConfig.loadClaim(uniqueId)
 }
 
-fun Player.hasClaim(): Boolean {
+fun Player.isClaimOwner(): Boolean {
     return DataConfig.getClaimOwners().any { it == this.uniqueId }
 }
 

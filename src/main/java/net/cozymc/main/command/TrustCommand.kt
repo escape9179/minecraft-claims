@@ -4,31 +4,30 @@ import logan.api.command.BasicCommand
 import logan.api.command.SenderTarget
 import net.cozymc.main.file.DataConfig
 import net.cozymc.main.file.MainConfig
+import net.cozymc.main.util.isClaimOwner
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 
-class MemberAddCommand : BasicCommand<Player>(
-    "add", "cozyclaims.member.add",
-    1..1,
-    target = SenderTarget.PLAYER,
-    parentCommand = "claim",
+class TrustCommand : BasicCommand<Player>(
+    "trust", "cozyclaims.trust",
+    1..1, target = SenderTarget.PLAYER, parentCommand = "claim"
 ) {
     override fun run(sender: Player, args: Array<out String>, data: Any?): Boolean {
-        val member = Bukkit.getPlayer(args[0]) ?: run {
+        val trustee = Bukkit.getPlayer(args[0]) ?: kotlin.run {
             sender.sendMessage(MainConfig.getUnknownPlayerMessage())
             return true
         }
 
-        val claim = DataConfig.loadClaim(sender.uniqueId)
-        if (claim == null || claim.owner != sender.uniqueId) {
+        if (!sender.isClaimOwner()) {
             sender.sendMessage(MainConfig.getNotClaimOwnerMessage())
             return true
         }
 
-        if (claim.addMember(member)) {
-            sender.sendMessage(MainConfig.getAddMemberSuccessMessage(member.name))
+        val claim = DataConfig.loadClaim(sender.uniqueId)
+        if (claim!!.addTrustee(trustee)) {
+            sender.sendMessage(MainConfig.getAddTrusteeSuccessMessage(trustee.name))
             DataConfig.saveClaim(claim)
-        } else sender.sendMessage(MainConfig.getPersonAlreadyMemberMessage())
+        } else sender.sendMessage(MainConfig.getPersonAlreadyTrustedMessage())
 
         return true
     }

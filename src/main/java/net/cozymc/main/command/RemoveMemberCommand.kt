@@ -7,8 +7,8 @@ import net.cozymc.main.file.MainConfig
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 
-class MemberAddCommand : BasicCommand<Player>(
-    "add", "cozyclaims.member.add",
+class RemoveMemberCommand : BasicCommand<Player>(
+    "remove", "cozyclaims.member.remove",
     1..1,
     target = SenderTarget.PLAYER,
     parentCommand = "claim",
@@ -18,18 +18,18 @@ class MemberAddCommand : BasicCommand<Player>(
             sender.sendMessage(MainConfig.getUnknownPlayerMessage())
             return true
         }
-
         val claim = DataConfig.loadClaim(sender.uniqueId)
         if (claim == null || claim.owner != sender.uniqueId) {
             sender.sendMessage(MainConfig.getNotClaimOwnerMessage())
             return true
         }
 
-        if (claim.addMember(member)) {
-            sender.sendMessage(MainConfig.getAddMemberSuccessMessage(member.name))
+        if (member.uniqueId == sender.uniqueId) sender.sendMessage(MainConfig.getRemoveMemberFailureSelfMessage())
+        else {
+            claim.removeMember(member)
             DataConfig.saveClaim(claim)
-        } else sender.sendMessage(MainConfig.getPersonAlreadyMemberMessage())
-
+            sender.sendMessage(MainConfig.getRemoveMemberSuccessMessage(member.name))
+        }
         return true
     }
 }

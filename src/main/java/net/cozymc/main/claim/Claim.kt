@@ -13,6 +13,7 @@ import java.util.UUID
 class Claim(val owner: UUID) : ConfigurationSerializable {
     val chunks = mutableSetOf<Chunk>()
     val members = ClaimMemberSet()
+    val trustees = mutableSetOf<UUID>()
 
     init {
         members.add(owner)
@@ -28,6 +29,7 @@ class Claim(val owner: UUID) : ConfigurationSerializable {
 
     constructor(map: Map<String, *>) : this(UUID.fromString(map["owner"].toString())) {
         members.addAll((map["members"] as List<*>).map(Any?::toString).map(UUID::fromString))
+        trustees.addAll((map["trustees"] as List<*>).map(Any?::toString).map(UUID::fromString))
         chunks.addAll(
             (map["chunks"] as List<*>)
                 .map(Any?::toString)
@@ -52,6 +54,14 @@ class Claim(val owner: UUID) : ConfigurationSerializable {
         return members.add(player.uniqueId)
     }
 
+    fun addTrustee(player: Player): Boolean {
+        return trustees.add(player.uniqueId)
+    }
+
+    fun removeTrustee(player: Player): Boolean {
+        return trustees.remove(player.uniqueId)
+    }
+
     fun removeMember(player: Player): Boolean {
         return members.remove(player.uniqueId)
     }
@@ -72,6 +82,7 @@ class Claim(val owner: UUID) : ConfigurationSerializable {
         return mutableMapOf(
             "owner" to owner.toString(),
             "members" to members.map { it.uuid.toString() },
+            "trustees" to trustees.map(UUID::toString),
             "chunks" to chunks.map { "${it.world.name},${it.x},${it.z}" }
         )
     }

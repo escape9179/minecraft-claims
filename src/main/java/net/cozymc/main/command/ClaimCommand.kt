@@ -30,6 +30,7 @@ class ClaimCommand : BasicCommand<Player>(
             sender.sendMessage(MainConfig.getChunkClaimFailureRegionMessage())
             return true
         }
+
         DataConfig.saveClaim(Claim.getOrCreate(sender.uniqueId, sender.location.chunk))
         sender.sendMessage(MainConfig.getChunkClaimSuccessMessage())
         return true
