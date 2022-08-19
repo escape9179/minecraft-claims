@@ -19,6 +19,10 @@ class ClaimMember(val uuid: UUID) {
         level = MemberLevel.values()[level.ordinal - 1]
         return true
     }
+
+    override fun equals(other: Any?): Boolean {
+        return other is ClaimMember && other.uuid == uuid
+    }
 }
 
 enum class MemberLevel {
