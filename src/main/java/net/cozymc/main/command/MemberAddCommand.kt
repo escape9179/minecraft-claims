@@ -19,7 +19,7 @@ class MemberAddCommand : BasicCommand<Player>(
             return true
         }
 
-        val claim = DataConfig.loadClaim(sender.uniqueId)
+        val claim = DataConfig.loadOwnerClaim(sender.uniqueId)
         if (claim == null || claim.owner != sender.uniqueId) {
             sender.sendMessage(MainConfig.getNotClaimOwnerMessage())
             return true

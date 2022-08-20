@@ -21,8 +21,12 @@ object DataConfig {
             .toSet()
     }
 
-    fun loadClaim(owner: UUID): Claim? {
-        return loadClaims().firstOrNull { it.owner == owner || it.owner in it.members }
+    fun loadMemberClaim(member: UUID): Claim? {
+        return loadClaims().firstOrNull { member in it.members }
+    }
+
+    fun loadOwnerClaim(owner: UUID): Claim? {
+        return loadClaims().firstOrNull {it.owner == owner}
     }
 
     fun saveClaim(claim: Claim) {
@@ -31,7 +35,7 @@ object DataConfig {
     }
 
     fun removeClaim(owner: UUID): Claim? {
-        return loadClaim(owner).also { config.set("$owner.claim", null); save() }
+        return this.loadOwnerClaim(owner).also { config.set("$owner.claim", null); save() }
     }
 
     private fun save() = config.save(file)

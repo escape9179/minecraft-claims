@@ -91,6 +91,10 @@ class Claim(val owner: UUID) : ConfigurationSerializable {
         return other is Claim && other.owner == owner
     }
 
+    override fun hashCode(): Int {
+        return 31 * owner.hashCode()
+    }
+
     companion object {
         fun isClaimed(location: Location): Boolean {
             DataConfig.loadClaims().forEach { if (it.chunks.contains(location.chunk)) return true }
@@ -106,11 +110,11 @@ class Claim(val owner: UUID) : ConfigurationSerializable {
         }
 
         fun getOrCreate(owner: UUID, chunk: Chunk): Claim {
-            return DataConfig.loadClaim(owner)?.also { it.addChunk(chunk) } ?: return Claim(owner, chunk)
+            return DataConfig.loadOwnerClaim(owner)?.also { it.addChunk(chunk) } ?: return Claim(owner, chunk)
         }
 
         fun getOrCreate(owner: UUID, chunks: Set<Chunk>): Claim {
-            return DataConfig.loadClaim(owner)?.also { it.addChunks(chunks) } ?: return Claim(owner, chunks)
+            return DataConfig.loadOwnerClaim(owner)?.also { it.addChunks(chunks) } ?: return Claim(owner, chunks)
         }
     }
 }

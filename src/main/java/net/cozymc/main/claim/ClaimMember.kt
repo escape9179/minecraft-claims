@@ -1,6 +1,7 @@
 
 package net.cozymc.main.claim
 
+import net.cozymc.main.CozyClaimsPlugin
 import java.util.*
 
 
@@ -22,6 +23,10 @@ class ClaimMember(val uuid: UUID) {
 
     override fun equals(other: Any?): Boolean {
         return other is ClaimMember && other.uuid == uuid
+    }
+
+    override fun hashCode(): Int {
+        return 31 * uuid.hashCode()
     }
 }
 

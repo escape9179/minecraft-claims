@@ -1,16 +1,13 @@
 package net.cozymc.main.util
 
+import net.cozymc.main.CozyClaimsPlugin
 import net.cozymc.main.claim.ClaimMember
 import org.bukkit.configuration.serialization.ConfigurationSerializable
 import java.util.*
 
-class ClaimMemberSet() : ConfigurationSerializable {
+class ClaimMemberSet {
 
     private val memberSet = mutableSetOf<ClaimMember>()
-
-    constructor(map: Map<String, *>) : this() {
-        memberSet.addAll((map["members"] as List<*>).map { ClaimMember(UUID.fromString(it.toString())) })
-    }
 
     operator fun get(uuid: UUID): ClaimMember? {
         return memberSet.firstOrNull { it.uuid == uuid }
@@ -34,9 +31,9 @@ class ClaimMemberSet() : ConfigurationSerializable {
 
     operator fun contains(uuid: UUID): Boolean = memberSet.any { it.uuid == uuid }
 
-    override fun serialize(): MutableMap<String, Any> {
-        return mutableMapOf(
-            "members" to memberSet.map { it.uuid.toString() }
-        )
+    override fun toString(): String {
+        val result = StringBuffer()
+        memberSet.forEach { result.append(it.uuid) }
+        return result.toString()
     }
 }

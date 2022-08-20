@@ -15,12 +15,8 @@ fun Player.getBalance(): Int {
     return CozyClaimsPlugin.essentials.getUser(this).money.intValueExact()
 }
 
-fun Player.isInOwnClaim(): Boolean {
-    return DataConfig.loadClaim(uniqueId)?.chunks?.any { location.chunk == it } ?: false
-}
-
-fun Player.isInTrustedClaim(): Boolean {
-    return getTrustedClaims().any { getOccupyingClaim() == it }
+fun Player.isRelativeOfClaim(claim: Claim): Boolean {
+    return claim.owner == uniqueId || uniqueId in claim.members || uniqueId in claim.trustees
 }
 
 fun Player.getTrustedClaims(): List<Claim?> {
@@ -36,7 +32,7 @@ fun Player.getPreviousOccupyingClaim(): Claim? {
 }
 
 fun Player.loadClaim(): Claim? {
-    return DataConfig.loadClaim(uniqueId)
+    return DataConfig.loadOwnerClaim(uniqueId)
 }
 
 fun Player.isClaimOwner(): Boolean {
@@ -74,5 +70,5 @@ fun Chunk.getAdjacentChunks(): List<AdjacentChunk> {
 }
 
 fun Chunk.isClaimOf(uuid: UUID): Boolean {
-    return DataConfig.loadClaim(uuid)?.chunks?.contains(this) ?: false
+    return DataConfig.loadOwnerClaim(uuid)?.chunks?.contains(this) ?: false
 }

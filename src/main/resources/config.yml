@@ -9,6 +9,7 @@ message:
   chunkClaimFailureRegion: "This chunk is protected."
   notClaimOwner: "You don't have a claim."
   notTrusteeOfClaim: "That person is not a trustee of this claim."
+  notMemberOfClaim: "That person is not a member of this claim."
   addMemberSuccess: "Added %s to your claim."
   addTrusteeSuccess: "Added %s as a trustee of your claim."
   removeMemberSuccess: "Removed %s from your claim."

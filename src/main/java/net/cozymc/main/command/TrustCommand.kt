@@ -23,7 +23,7 @@ class TrustCommand : BasicCommand<Player>(
             return true
         }
 
-        val claim = DataConfig.loadClaim(sender.uniqueId)
+        val claim = DataConfig.loadOwnerClaim(sender.uniqueId)
         if (claim!!.addTrustee(trustee)) {
             sender.sendMessage(MainConfig.getAddTrusteeSuccessMessage(trustee.name))
             DataConfig.saveClaim(claim)
