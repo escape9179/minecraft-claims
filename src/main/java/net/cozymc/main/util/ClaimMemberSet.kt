@@ -30,4 +30,10 @@ class ClaimMemberSet {
     }
 
     operator fun contains(uuid: UUID): Boolean = memberSet.any { it.uuid == uuid }
+
+    override fun toString(): String {
+        val result = StringBuffer()
+        memberSet.forEach { result.append(it.uuid) }
+        return result.toString()
+    }
 }

@@ -26,9 +26,7 @@ class ClaimMember(val uuid: UUID) {
     }
 
     override fun hashCode(): Int {
-        var result = uuid.hashCode()
-        result = 31 * result + level.hashCode()
-        return result
+        return 31 * uuid.hashCode()
     }
 }
 
