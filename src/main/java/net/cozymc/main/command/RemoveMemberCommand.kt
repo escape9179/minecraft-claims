@@ -25,11 +25,10 @@ class RemoveMemberCommand : BasicCommand<Player>(
         }
 
         if (member.uniqueId == sender.uniqueId) sender.sendMessage(MainConfig.getRemoveMemberFailureSelfMessage())
-        else {
-            claim.removeMember(member)
+        else if (claim.removeMember(member)) {
             DataConfig.saveClaim(claim)
             sender.sendMessage(MainConfig.getRemoveMemberSuccessMessage(member.name))
-        }
+        } else sender.sendMessage(MainConfig.getNotMemberOfClaimMessage())
         return true
     }
 }

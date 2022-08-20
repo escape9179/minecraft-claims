@@ -14,12 +14,7 @@ class ClaimMemberSet {
     }
 
     fun add(uuid: UUID): Boolean {
-        if (memberSet.add(ClaimMember(uuid))) {
-            CozyClaimsPlugin.log("ClaimMemberSet.add() returned true.")
-            return true
-        }
-//        return memberSet.add(ClaimMember(uuid))
-        return false
+        return memberSet.add(ClaimMember(uuid))
     }
 
     fun addAll(uuids: Collection<UUID>) {
