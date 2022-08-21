@@ -4,6 +4,7 @@ import com.earth2me.essentials.Essentials
 import net.cozymc.api.OnlinePlayerIteratorThread
 import net.cozymc.api.command.CommandDispatcher
 import net.cozymc.main.claim.Claim
+import net.cozymc.main.claim.ClaimInfoCommand
 import net.cozymc.main.command.*
 import net.cozymc.main.util.playParticlesAroundClaim
 import net.cozymc.main.command.MemberAddCommand
@@ -46,6 +47,7 @@ class CozyClaimsPlugin : JavaPlugin() {
         CommandDispatcher.registerCommand(MemberDemoteCommand())
         CommandDispatcher.registerCommand(TrustCommand())
         CommandDispatcher.registerCommand(DistrustCommand())
+        CommandDispatcher.registerCommand(ClaimInfoCommand())
 
         ConfigurationSerialization.registerClass(Claim::class.java)
 

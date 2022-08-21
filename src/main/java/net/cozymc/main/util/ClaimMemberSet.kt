@@ -2,6 +2,7 @@ package net.cozymc.main.util
 
 import net.cozymc.main.CozyClaimsPlugin
 import net.cozymc.main.claim.ClaimMember
+import org.bukkit.OfflinePlayer
 import org.bukkit.configuration.serialization.ConfigurationSerializable
 import java.util.*
 
@@ -32,8 +33,11 @@ class ClaimMemberSet {
     operator fun contains(uuid: UUID): Boolean = memberSet.any { it.uuid == uuid }
 
     override fun toString(): String {
-        val result = StringBuffer()
-        memberSet.forEach { result.append(it.uuid) }
-        return result.toString()
+        val joiner = StringJoiner(", ")
+        memberSet.map(ClaimMember::uuid)
+            .map(CozyClaimsPlugin.instance.server::getOfflinePlayer)
+            .map(OfflinePlayer::getName)
+            .forEach(joiner::add)
+        return joiner.toString()
     }
 }

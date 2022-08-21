@@ -14,6 +14,8 @@ class Claim(val owner: UUID) : ConfigurationSerializable {
     val chunks = mutableSetOf<Chunk>()
     val members = ClaimMemberSet()
     val trustees = mutableSetOf<UUID>()
+    val size
+        get() = chunks.size
 
     init {
         members.add(owner)

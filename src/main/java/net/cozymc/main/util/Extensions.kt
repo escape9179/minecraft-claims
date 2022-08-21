@@ -9,6 +9,7 @@ import net.cozymc.main.file.MainConfig
 import org.bukkit.Bukkit
 import org.bukkit.Chunk
 import org.bukkit.entity.Player
+import org.bukkit.plugin.java.JavaPlugin
 import java.util.*
 
 fun Player.getBalance(): Int {
@@ -31,7 +32,7 @@ fun Player.getPreviousOccupyingClaim(): Claim? {
     return Claim.getClaimAt(lastBlockLocation)
 }
 
-fun Player.loadClaim(): Claim? {
+fun Player.loadOwnerClaim(): Claim? {
     return DataConfig.loadOwnerClaim(uniqueId)
 }
 

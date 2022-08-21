@@ -17,6 +17,10 @@ object MainConfig {
         return config.getInt("claim.cost")
     }
 
+    fun getClaimInfoDisplay(): List<String> {
+        return config.getStringList("claim.info-display")
+    }
+
     fun getClaimParticleEffectType(): Particle {
         return Particle.valueOf(config.getString("claim.particleType", Particle.VILLAGER_HAPPY.name).uppercase())
     }
@@ -79,6 +83,10 @@ object MainConfig {
 
     fun getNotTrusteeOfClaimMessage(): String {
         return config.getString("message.notTrusteeOfClaim")
+    }
+
+    fun getNotInsideClaimMessage(): String {
+        return config.getString("message.notInsideClaim")
     }
 
     fun getUnknownPlayerMessage(): String {
