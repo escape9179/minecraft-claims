@@ -8,7 +8,7 @@ import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 
 class RemoveMemberCommand : BasicCommand<Player>(
-    "remove", "cozyclaims.member.remove",
+    "remove", "cozyclaims.remove",
     1..1,
     target = SenderTarget.PLAYER,
     parentCommand = "claim",

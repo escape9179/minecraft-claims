@@ -8,7 +8,7 @@ import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 
 class MemberAddCommand : BasicCommand<Player>(
-    "add", "cozyclaims.member.add",
+    "add", "cozyclaims.add",
     1..1,
     target = SenderTarget.PLAYER,
     parentCommand = "claim",
