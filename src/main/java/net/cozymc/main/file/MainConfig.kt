@@ -113,6 +113,10 @@ object MainConfig {
         return config.getString("message.personAlreadyMember")
     }
 
+    fun getInteractNotAllowedMessage(): String {
+        return config.getString("message.interactNotAllowed")
+    }
+
     fun reload() {
         config = YamlConfiguration.loadConfiguration(file)
     }

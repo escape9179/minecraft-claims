@@ -11,6 +11,7 @@ import net.cozymc.main.command.MemberAddCommand
 import net.cozymc.main.command.ClaimCommand
 import net.cozymc.main.command.RemoveMemberCommand
 import net.cozymc.main.command.ClaimUnclaimCommand
+import net.cozymc.main.listener.PlayerInteractListener
 import net.cozymc.main.util.*
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
@@ -48,6 +49,8 @@ class CozyClaimsPlugin : JavaPlugin() {
         CommandDispatcher.registerCommand(TrustCommand())
         CommandDispatcher.registerCommand(DistrustCommand())
         CommandDispatcher.registerCommand(ClaimInfoCommand())
+
+        server.pluginManager.registerEvents(PlayerInteractListener(), this)
 
         ConfigurationSerialization.registerClass(Claim::class.java)
 

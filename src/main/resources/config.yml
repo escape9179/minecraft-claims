@@ -30,3 +30,4 @@ message:
   personAlreadyTrusted: "That person is already trusted."
   memberChangeLevelSuccess: "Changed %s's level to %s."
   memberChangeLevelFailure: "%s is already level %s."
+  interactNotAllowed: "You can't do that here."
