@@ -2,7 +2,6 @@ package net.cozymc.main.file
 
 import net.cozymc.main.CONFIG_FILE_NAME
 import net.cozymc.main.DATA_FOLDER_PATH
-import net.cozymc.main.claim.ClaimMember
 import net.cozymc.main.claim.MemberLevel
 import org.bukkit.Particle
 import org.bukkit.configuration.file.YamlConfiguration
@@ -43,6 +42,10 @@ object MainConfig {
 
     fun getNotClaimOwnerMessage(): String {
         return config.getString("message.notClaimOwner")
+    }
+
+    fun getNotOwnerOfOccupyingClaimMessage(): String {
+        return config.getString("message.notOwnerOfOccupyingClaim")
     }
 
     fun getAddTrusteeSuccessMessage(name: String): String {
@@ -93,10 +96,21 @@ object MainConfig {
         return config.getString("message.unknownPlayer")
     }
 
-    fun getClaimRemoveSuccessMessage(chunkCount: Int): String {
-        return String.format(config.getString("message.claimRemoveSuccess"), chunkCount)
+    fun getClaimAbandonSuccessMessage(): String {
+        return config.getString("message.claimAbandonSuccess")
     }
 
+    fun getClaimAbandonSuccessMessage(chunkCount: Int): String {
+        return String.format(config.getString("message.claimAbandonAllSuccess"), chunkCount)
+    }
+
+    fun getClaimAbandonFailureMessage(): String {
+        return config.getString("message.claimAbandonFailure")
+    }
+
+    fun getClaimAbandonAllSuccessMessage(size: Int): String {
+        return String.format(config.getString("message.claimAbandonAllSuccess"), size)
+    }
     fun getUsageSpecifyClaimNameMessage(): String {
         return config.getString("message.usageSpecifyClaimName")
     }

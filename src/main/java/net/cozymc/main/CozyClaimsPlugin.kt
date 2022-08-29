@@ -49,6 +49,7 @@ class CozyClaimsPlugin : JavaPlugin() {
         CommandDispatcher.registerCommand(TrustCommand())
         CommandDispatcher.registerCommand(DistrustCommand())
         CommandDispatcher.registerCommand(ClaimInfoCommand())
+        CommandDispatcher.registerCommand(ClaimAbandonCommand())
 
         server.pluginManager.registerEvents(PlayerInteractListener(), this)
 

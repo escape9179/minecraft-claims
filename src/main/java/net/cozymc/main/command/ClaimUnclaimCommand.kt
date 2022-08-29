@@ -21,7 +21,7 @@ class ClaimUnclaimCommand : BasicCommand<CommandSender>(
                     sender.sendMessage(MainConfig.getNotClaimOwnerMessage())
                     return true
                 }
-                sender.sendMessage(MainConfig.getClaimRemoveSuccessMessage(claim.chunks.size))
+                sender.sendMessage(MainConfig.getClaimAbandonSuccessMessage(claim.chunks.size))
             } else {
                 sender.sendMessage(MainConfig.getUsageSpecifyClaimNameMessage())
             }

@@ -9,7 +9,6 @@ import net.cozymc.main.file.MainConfig
 import org.bukkit.Bukkit
 import org.bukkit.Chunk
 import org.bukkit.entity.Player
-import org.bukkit.plugin.java.JavaPlugin
 import java.util.*
 
 fun Player.getBalance(): Int {
@@ -38,6 +37,10 @@ fun Player.loadOwnerClaim(): Claim? {
 
 fun Player.isClaimOwner(): Boolean {
     return DataConfig.getClaimOwners().any { it == this.uniqueId }
+}
+
+fun Player.isClaimOwnerOf(claim: Claim): Boolean {
+    return claim.owner == uniqueId
 }
 
 private val lastBlockLocationMap = mutableMapOf<UUID, BlockLocation>()
