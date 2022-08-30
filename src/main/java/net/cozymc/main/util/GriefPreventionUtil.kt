@@ -22,8 +22,8 @@ class GriefPreventionClaim(val file: File) {
     init {
         val config = YamlConfiguration.loadConfiguration(file)
         owner = UUID.fromString(config.getString("Owner"))
-        lesserBoundaryCorner = getLocation(config.getString("Lesser Boundary Corner"))
-        greaterBoundaryCorner = getLocation(config.getString("Greater Boundary Corner"))
+        lesserBoundaryCorner = getLocation(config.getString("Lesser Boundary Corner")!!)
+        greaterBoundaryCorner = getLocation(config.getString("Greater Boundary Corner")!!)
         world = lesserBoundaryCorner.world
     }
 

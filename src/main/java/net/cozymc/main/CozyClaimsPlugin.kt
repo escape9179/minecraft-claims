@@ -16,7 +16,9 @@ import net.cozymc.main.util.*
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.configuration.serialization.ConfigurationSerialization
+import org.bukkit.plugin.PluginDescriptionFile
 import org.bukkit.plugin.java.JavaPlugin
+import org.bukkit.plugin.java.JavaPluginLoader
 import java.io.File
 import java.io.IOException
 import java.nio.file.Files
@@ -26,11 +28,14 @@ const val DATA_FOLDER_PATH = "plugins/CozyClaims/"
 const val CONFIG_FILE_NAME = "config.yml"
 const val DATA_FILE_NAME = "data.yml"
 
-class CozyClaimsPlugin : JavaPlugin() {
+class CozyClaimsPlugin(loader: JavaPluginLoader, description: PluginDescriptionFile, dataFolder: File, file: File) : JavaPlugin(loader, description, dataFolder, file) {
+
+    fun loadPluginDependencies() {
+        essentials = server.pluginManager.getPlugin("Essentials") as Essentials
+    }
 
     override fun onEnable() {
         instance = this
-        essentials = server.pluginManager.getPlugin("Essentials") as Essentials
 
         File(DATA_FOLDER_PATH).mkdirs()
         try {
@@ -59,6 +64,8 @@ class CozyClaimsPlugin : JavaPlugin() {
         createTitleSendTask()
 
         OnlinePlayerIteratorThread.start()
+
+        loadPluginDependencies()
 
         logger.info("$name enabled.")
     }

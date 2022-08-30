@@ -11,7 +11,7 @@ object OnlinePlayerIteratorThread {
     var count = 0
 
     fun start() {
-        Bukkit.getScheduler().runTaskTimer(CozyClaimsPlugin.instance, {
+        Bukkit.getScheduler().runTaskTimer(CozyClaimsPlugin.instance, Runnable {
             tasks.entries.forEach { entry ->
                 if (count % entry.key == 0L)
                     Bukkit.getOnlinePlayers().forEach { player ->

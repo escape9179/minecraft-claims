@@ -17,7 +17,7 @@ object DataConfig {
 
     fun loadClaims(): Set<Claim> {
         return config.getKeys(false)
-            .map { key -> config.getSerializable("$key.claim", Claim::class.java) }
+            .map { key -> config.getSerializable("$key.claim", Claim::class.java)!! }
             .toSet()
     }
 

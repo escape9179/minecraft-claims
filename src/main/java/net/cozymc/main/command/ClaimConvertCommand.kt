@@ -20,7 +20,7 @@ class ClaimConvertCommand : BasicCommand<Player>(
 ) {
     override fun run(sender: Player, args: Array<out String>, data: Any?): Boolean {
         val claimDataFolder = File("plugins/GriefPreventionData/ClaimData")
-        Bukkit.getScheduler().runTaskAsynchronously(CozyClaimsPlugin.instance) {
+        Bukkit.getScheduler().runTaskAsynchronously(CozyClaimsPlugin.instance, Runnable {
             claimDataFolder.listFiles()?.forEach {
                 val griefPreventionClaim = GriefPreventionUtil.getClaim(it)
                 CozyClaimsPlugin.log(griefPreventionClaim.toString())
@@ -28,7 +28,7 @@ class ClaimConvertCommand : BasicCommand<Player>(
                 DataConfig.saveClaim(Claim.getOrCreate(griefPreventionClaim.owner, newClaimChunks))
                 CozyClaimsPlugin.log("Converted claims of ${griefPreventionClaim.owner}.")
             }
-        }
+        })
         CozyClaimsPlugin.log("Done converting claims.")
         return true
     }

@@ -36,7 +36,7 @@ class Claim(val owner: UUID) : ConfigurationSerializable {
             (map["chunks"] as List<*>)
                 .map(Any?::toString)
                 .map { it.split(",") }
-                .map { Bukkit.getWorld(it[0]).getChunkAt(it[1].toInt(), it[2].toInt()) }
+                .map { Bukkit.getWorld(it[0])!!.getChunkAt(it[1].toInt(), it[2].toInt()) }
         )
     }
 
