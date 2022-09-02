@@ -30,7 +30,7 @@ const val DATA_FILE_NAME = "data.yml"
 
 class CozyClaimsPlugin(loader: JavaPluginLoader, description: PluginDescriptionFile, dataFolder: File, file: File) : JavaPlugin(loader, description, dataFolder, file) {
 
-    fun loadPluginDependencies() {
+    private fun loadPluginDependencies() {
         essentials = server.pluginManager.getPlugin("Essentials") as Essentials
     }
 
@@ -49,8 +49,6 @@ class CozyClaimsPlugin(loader: JavaPluginLoader, description: PluginDescriptionF
         CommandDispatcher.registerCommand(RemoveMemberCommand())
         CommandDispatcher.registerCommand(ClaimUnclaimCommand())
         CommandDispatcher.registerCommand(ClaimConvertCommand())
-        CommandDispatcher.registerCommand(MemberPromoteCommand())
-        CommandDispatcher.registerCommand(MemberDemoteCommand())
         CommandDispatcher.registerCommand(TrustCommand())
         CommandDispatcher.registerCommand(DistrustCommand())
         CommandDispatcher.registerCommand(ClaimInfoCommand())

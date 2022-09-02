@@ -1,5 +1,6 @@
 package net.cozymc.main.util
 
+import com.earth2me.essentials.Essentials
 import net.cozymc.main.claim.Claim
 import net.cozymc.main.CozyClaimsPlugin
 import net.cozymc.main.chunk.Adjacency
