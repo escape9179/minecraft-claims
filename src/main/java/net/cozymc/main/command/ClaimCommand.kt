@@ -17,7 +17,7 @@ class ClaimCommand : BasicCommand<Player>(
     target = SenderTarget.PLAYER,
 ) {
     override fun run(sender: Player, args: Array<out String>, data: Any?): Boolean {
-        if (sender.getBalance() <= MainConfig.getClaimCost()) {
+        if (sender.getBalance() < MainConfig.getClaimCost()) {
             sender.sendMessage(MainConfig.getChunkClaimFailureMoneyMessage())
             return true
         }

@@ -8,7 +8,6 @@ import com.earth2me.essentials.User
 import net.cozymc.main.CozyClaimsPlugin
 import net.cozymc.main.file.DataConfig
 import net.cozymc.main.file.MainConfig
-import net.cozymc.main.getEssentialsUserFromMockPlayer
 import net.cozymc.main.getMessages
 import net.cozymc.main.mock.CustomServerMock
 import net.cozymc.main.util.isClaimOwner
@@ -22,6 +21,7 @@ import javax.xml.crypto.Data
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 class ClaimCommandTest {
 
@@ -49,6 +49,8 @@ class ClaimCommandTest {
         Mockito.`when`(user.money).thenReturn(money)
         Mockito.`when`(money.intValueExact()).thenReturn(25000)
         player.performCommand("claim")
+        assertTrue(player.isClaimOwner())
+        assertContains(player.getMessages(), MainConfig.getChunkClaimSuccessMessage())
     }
 
     @Test
@@ -60,5 +62,9 @@ class ClaimCommandTest {
         assertContains(player.getMessages(), MainConfig.getChunkClaimFailureMoneyMessage())
     }
 
+//    @Test
+//    fun testFreeChunkEnoughMoneyNotClaimOwnerWithClaimPermissions() {
+//
+//    }
     private fun getEssentialsUser() = CozyClaimsPlugin.essentials.getUser(Mockito.any<Player>())
 }
