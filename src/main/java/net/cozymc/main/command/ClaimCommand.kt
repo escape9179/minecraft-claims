@@ -2,9 +2,8 @@ package net.cozymc.main.command
 
 import logan.api.command.BasicCommand
 import logan.api.command.SenderTarget
-import net.cozymc.main.CozyClaimsPlugin
 import net.cozymc.main.claim.Claim
-import net.cozymc.main.WorldGuard
+import net.cozymc.main.WorldGuardUtils
 import net.cozymc.main.file.MainConfig
 import net.cozymc.main.file.DataConfig
 import net.cozymc.main.util.getBalance
@@ -27,7 +26,7 @@ class ClaimCommand : BasicCommand<Player>(
             return true
         }
 
-        if (WorldGuard.isRegion(sender.location)) {
+        if (WorldGuardUtils.isRegion(sender.location)) {
             sender.sendMessage(MainConfig.getChunkClaimFailureRegionMessage())
             return true
         }
