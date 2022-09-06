@@ -9,7 +9,7 @@ import java.util.*
 
 object DataConfig {
     private val file = File(DATA_FOLDER_PATH, DATA_FILE_NAME)
-    private val config = YamlConfiguration.loadConfiguration(file)
+    private var config = YamlConfiguration.loadConfiguration(file)
 
     fun getClaimOwners(): List<UUID> {
         return config.getKeys(false).map(UUID::fromString)
@@ -36,6 +36,11 @@ object DataConfig {
 
     fun removeClaim(owner: UUID): Claim? {
         return this.loadOwnerClaim(owner).also { config.set("$owner.claim", null); save() }
+    }
+
+    fun delete() {
+        file.delete()
+        config = YamlConfiguration.loadConfiguration(file)
     }
 
     private fun save() = config.save(file)

@@ -12,7 +12,6 @@ import org.bukkit.plugin.Plugin
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mockito
 import kotlin.test.assertNotNull
 
 class CozyClaimsPluginTest {

@@ -8,9 +8,9 @@ import org.bukkit.Location
 object WorldGuardUtils {
 
     fun isRegion(location: Location): Boolean {
-        val instance = WorldGuard.getInstance() ?: return false
-        val platform = instance.platform ?: return false
-        val regionContainer = platform.regionContainer ?: return false
+        val instance = WorldGuard.getInstance()!!
+        val platform = instance.platform!!
+        val regionContainer = platform.regionContainer!!
         return regionContainer.get(BukkitAdapter.adapt(location.world))?.regions?.any {
             it.value.contains(BlockVector2.at(location.x, location.z))
         } ?: false
