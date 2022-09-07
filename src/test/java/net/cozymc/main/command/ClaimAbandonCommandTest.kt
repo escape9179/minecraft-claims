@@ -1,5 +1,6 @@
 package net.cozymc.main.command
 
+import net.cozymc.main.BukkitTest
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -9,17 +10,7 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 
 @DisplayName("The abandon command")
-class ClaimAbandonCommandTest {
-
-    @BeforeEach
-    fun setUp() {
-
-    }
-
-    @AfterEach
-    fun tearDown() {
-
-    }
+class ClaimAbandonCommandTest : BukkitTest() {
 
     @Nested
     @DisplayName("is performed by a player outside a claim")
