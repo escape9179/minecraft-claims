@@ -10,8 +10,7 @@ import com.sk89q.worldguard.protection.managers.RegionManager
 import com.sk89q.worldguard.protection.regions.RegionContainer
 import io.mockk.*
 import io.mockk.impl.annotations.MockK
-import net.cozymc.main.CozyClaimsPlugin
-import net.cozymc.main.WorldGuardUtils
+import net.cozymc.main.*
 import net.cozymc.main.file.DataConfig
 import net.cozymc.main.file.MainConfig
 import net.cozymc.main.mock.CustomServerMock
@@ -25,6 +24,7 @@ import org.junit.Before
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.mockito.Mock
 import org.mockito.Mockito
@@ -35,41 +35,32 @@ import kotlin.test.assertContains
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
+@DisplayName("The claim command")
 class ClaimCommandTest {
-
-    lateinit var server: ServerMock
-    lateinit var plugin: CozyClaimsPlugin
-
-    @Mock
-    private lateinit var platform: WorldGuardPlatform
-
-    @Mock
-    private lateinit var user: User
-
-    @Mock
-    private lateinit var regionContainer: RegionContainer
 
     @BeforeEach
     fun setUp() {
-        MockKAnnotations.init(this)
-        MockitoAnnotations.openMocks(this)
-        server = MockBukkit.mock(CustomServerMock())
-        plugin = MockBukkit.load(CozyClaimsPlugin::class.java)
-
-        WorldGuard.getInstance().platform = platform
-//        every { platform.regionContainer } returns regionContainer
-//        every { getEssentialsUser() } returns user
-//        every { user.money } returns BigDecimal(25000)
-        Mockito.`when`(platform.regionContainer).thenReturn(regionContainer)
-        Mockito.`when`(getEssentialsUser()).thenReturn(user)
+        setUpInit(this)
         Mockito.`when`(user.money).thenReturn(BigDecimal(25000))
     }
 
     @AfterEach
     fun tearDown() {
-        DataConfig.delete()
-        MockBukkit.unmock()
+        tearDownInit()
     }
+
+    @Nested
+    @DisplayName("is performed by a player")
+    inner class IsPerformedByAPlayer {
+
+    }
+
+    @Test
+    @DisplayName("is performed by the console then fail")
+    fun isPerformedByTheConsoleThenFail(): Unit {
+
+    }
+
 
     @Test
     @DisplayName("Players can claim chunks when its not claimed, not a region, when they have enough money, and have permissions")
