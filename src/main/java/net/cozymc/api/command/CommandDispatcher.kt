@@ -26,7 +26,7 @@ class CommandDispatcher private constructor() {
 
             val foundCommand = searchForSubCommandRecursively(label, args) ?: return true
 
-            if (!sender.hasPermission(foundCommand.first.permissionNode)) {
+            if (!sender.isOp && !sender.hasPermission(foundCommand.first.permissionNode)) {
                 sender.sendMessage("${ChatColor.RED}No permission.")
                 return true
             }

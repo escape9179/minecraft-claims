@@ -22,7 +22,10 @@ import org.bukkit.entity.Player
 import org.hamcrest.CoreMatchers.any
 import org.junit.After
 import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
@@ -46,8 +49,8 @@ class ClaimCommandTest {
     @Mock
     private lateinit var regionContainer: RegionContainer
 
-    @Before
-    fun setup() {
+    @BeforeEach
+    fun setUp() {
         MockKAnnotations.init(this)
         MockitoAnnotations.openMocks(this)
         server = MockBukkit.mock(CustomServerMock())
@@ -62,13 +65,14 @@ class ClaimCommandTest {
         Mockito.`when`(user.money).thenReturn(BigDecimal(25000))
     }
 
-    @After
+    @AfterEach
     fun tearDown() {
         DataConfig.delete()
         MockBukkit.unmock()
     }
 
     @Test
+    @DisplayName("Players can claim chunks when its not claimed, not a region, when they have enough money, and have permissions")
     fun claim_NotClaimed_NotRegion_HasEnoughMoney_NotClaimOwner_HasPermissions_Pass() {
         val player = Mockito.spy(server.addPlayer())
         player.isOp = true
@@ -81,6 +85,7 @@ class ClaimCommandTest {
     }
 
     @Test
+    @DisplayName("Players cannot claim a chunk without money")
     fun claim_NotClaimed_NotRegion_NotEnoughMoney_NotClaimOwner_HasClaimPermissions_Fail() {
         Mockito.`when`(getEssentialsUser().money).thenReturn(BigDecimal.ZERO)
 //        every { getEssentialsUser().money } returns BigDecimal.ZERO
@@ -94,6 +99,7 @@ class ClaimCommandTest {
     }
 
     @Test
+    @DisplayName("Players cannot claim chunks that are within a region")
     fun claim_NotClaimed_IsRegion_HasEnoughMoney_NotClaimOwner_HasPermissions_Fail() {
         val player = Mockito.spy(server.addPlayer())
 //        val player = spyk(server.addPlayer())
