@@ -11,9 +11,15 @@ import kotlin.reflect.KClass
 
 class CommandDispatcher private constructor() {
 
+    enum class Result {
+        NO_RESULT, NO_PERMISSION, WRONG_TARGET, INVALID_NUMBER_OF_ARGUMENTS, INVALID_ARGUMENT_TYPE
+    }
+
     companion object : CommandExecutor {
 
         private val registeredCommands = mutableSetOf<BasicCommand<*>>()
+        val NO_PERMISSION_MESSAGE  = "${ChatColor.RED}No permission."
+        var lastResult: Result = Result.NO_RESULT
 
         fun registerCommand(command: BasicCommand<*>) = registeredCommands.add(command)
 
@@ -27,7 +33,8 @@ class CommandDispatcher private constructor() {
             val foundCommand = searchForSubCommandRecursively(label, args) ?: return true
 
             if (!sender.isOp && !sender.hasPermission(foundCommand.first.permissionNode)) {
-                sender.sendMessage("${ChatColor.RED}No permission.")
+                sender.sendMessage(NO_PERMISSION_MESSAGE)
+                lastResult = Result.NO_PERMISSION
                 return true
             }
 
@@ -35,17 +42,20 @@ class CommandDispatcher private constructor() {
 
             if (!isValidTarget(commandTarget, foundCommand.first.target)) {
                 sender.sendMessage("${ChatColor.RED}You cannot perform this command as ${sender::class.simpleName}")
+                lastResult = Result.WRONG_TARGET
                 return true
             }
 
             /* Subtract 1 from the arg size to ignore sub-command name arg. */
             if (!isValidArgLength(foundCommand.second.size, foundCommand.first.argRange)) {
                 foundCommand.first.usage?.let { sender.sendMessage(it) }
+                lastResult = Result.INVALID_NUMBER_OF_ARGUMENTS
                 return true
             }
 
             if (foundCommand.first.argTypes.isNotEmpty() && !isCorrectArgTypeList(foundCommand.second, foundCommand.first.argTypes)) {
                 foundCommand.first.usage?.let { sender.sendMessage(it) }
+                lastResult = Result.INVALID_ARGUMENT_TYPE
                 return true
             }
 
