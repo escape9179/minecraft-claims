@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Nested
 
 @DisplayName("The abandon command")
 class ClaimAbandonCommandTest : BukkitTest() {
-
     @Nested
     @DisplayName("is performed by a player outside a claim")
     inner class IsPerformedByAPlayerOutSideAClaim {

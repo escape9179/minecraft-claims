@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test
 import org.mockito.Mock
 import org.mockito.Mockito
 import java.math.BigDecimal
+import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -130,5 +131,6 @@ class ClaimCommandTest : BukkitTest() {
     fun isPerformedByTheConsoleThenFail(): Unit {
         server.executeConsole("claim")
         assertEquals(CommandDispatcher.lastResult, CommandDispatcher.Result.WRONG_TARGET)
+        assertEquals(emptySet(), DataConfig.loadClaims())
     }
 }
