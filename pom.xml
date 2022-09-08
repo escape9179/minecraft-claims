@@ -29,6 +29,10 @@
             <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
 
     <build>
@@ -124,6 +128,12 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-inline</artifactId>
             <version>4.7.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.MilkBowl</groupId>
+            <artifactId>VaultAPI</artifactId>
+            <version>1.7</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>

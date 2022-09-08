@@ -38,12 +38,6 @@ class ClaimCommandTest : BukkitTest() {
         io.mockk.mockkStatic("net.cozymc.main.util.ExtensionsKt")
     }
 
-    @AfterEach
-    override fun tearDown(): Unit {
-        DataConfig.removeClaim(player.uniqueId)
-        super.tearDown()
-    }
-
     @Nested
     @DisplayName("is performed by a player")
     inner class IsPerformedByAPlayer {
