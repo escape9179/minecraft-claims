@@ -15,7 +15,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 
-open class BukkitTest {
+open class CozyClaimsTest {
 
     lateinit var server: ServerMock
     lateinit var plugin: CozyClaimsPlugin

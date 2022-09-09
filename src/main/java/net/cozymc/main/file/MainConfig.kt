@@ -80,6 +80,10 @@ object MainConfig {
         return String.format(config.getString("message.memberChangeLevelFailure")!!, name, level.name.lowercase())
     }
 
+    fun getNotRelativeOfAnyClaimMessage(): String {
+        return config.getString("message.notRelativeOfAnyClaim")!!
+    }
+
     fun getNotMemberOfClaimMessage(): String {
         return config.getString("message.notMemberOfClaim")!!
     }

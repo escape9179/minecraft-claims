@@ -20,6 +20,10 @@ fun Player.isRelativeOfClaim(claim: Claim): Boolean {
     return claim.owner == uniqueId || uniqueId in claim.members || uniqueId in claim.trustees
 }
 
+fun Player.isRelativeOfAnyClaim(): Boolean {
+    return DataConfig.loadClaims().any { it.owner == uniqueId || uniqueId in it.members || uniqueId in it.trustees }
+}
+
 fun Player.getTrustedClaims(): List<Claim?> {
     return DataConfig.loadClaims().filter { uniqueId in it.trustees }.toList()
 }

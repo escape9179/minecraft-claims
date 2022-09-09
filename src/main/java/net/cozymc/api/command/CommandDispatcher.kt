@@ -12,7 +12,7 @@ import kotlin.reflect.KClass
 class CommandDispatcher private constructor() {
 
     enum class Result {
-        NO_RESULT, NO_PERMISSION, WRONG_TARGET, INVALID_NUMBER_OF_ARGUMENTS, INVALID_ARGUMENT_TYPE
+        NO_RESULT, NO_PERMISSION, WRONG_TARGET, INVALID_NUMBER_OF_ARGUMENTS, INVALID_ARGUMENT_TYPE, SUCCESS
     }
 
     companion object : CommandExecutor {

@@ -7,27 +7,18 @@ import net.cozymc.main.claim.Claim
 import net.cozymc.main.file.DataConfig
 import net.cozymc.main.file.MainConfig
 import net.cozymc.main.util.getBalance
-import net.cozymc.main.util.getOccupyingClaim
 import net.cozymc.main.util.isClaimOwner
-import org.bukkit.Location
-import org.bukkit.entity.Player
-import org.hamcrest.CoreMatchers
-import org.hamcrest.CoreMatchers.any
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import org.mockito.Mock
 import org.mockito.Mockito
-import java.math.BigDecimal
-import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 @DisplayName("The claim command")
-class ClaimCommandTest : BukkitTest() {
+class ClaimCommandTest : CozyClaimsTest() {
 
     lateinit var player: PlayerMock
 

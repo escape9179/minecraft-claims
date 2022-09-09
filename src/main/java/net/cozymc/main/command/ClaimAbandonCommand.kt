@@ -6,6 +6,7 @@ import net.cozymc.main.file.DataConfig
 import net.cozymc.main.file.MainConfig
 import net.cozymc.main.util.getOccupyingClaim
 import net.cozymc.main.util.isClaimOwnerOf
+import net.cozymc.main.util.isRelativeOfAnyClaim
 import org.bukkit.entity.Player
 
 class ClaimAbandonCommand : BasicCommand<Player>(
@@ -13,6 +14,10 @@ class ClaimAbandonCommand : BasicCommand<Player>(
     target = SenderTarget.PLAYER
 ) {
     override fun run(sender: Player, args: Array<out String>, data: Any?): Boolean {
+        if (!sender.isRelativeOfAnyClaim()) {
+            sender.sendMessage(MainConfig.getNotRelativeOfAnyClaimMessage())
+            return true
+        }
         val claim = sender.getOccupyingClaim() ?: run {
             sender.sendMessage(MainConfig.getNotInsideClaimMessage())
             return true
