@@ -15,17 +15,23 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor
 import org.junit.jupiter.params.provider.CsvSource
 import org.mockito.Mockito
+import java.io.StreamCorruptedException
 import java.util.*
 import kotlin.math.ceil
 import kotlin.math.pow
 
 @DisplayName("The grief prevention claim")
 internal class GriefPreventionClaimTest : CozyClaimsTest() {
+    lateinit var lesserCorner: Location
+    lateinit var greaterCorner: Location
+
     @BeforeEach
     override fun setup() {
         super.setup()
         server.addWorld(WorldMock(WorldCreator.name("world")))
         server.addWorld(WorldMock(WorldCreator.name("world_nether")))
+        lesserCorner = Location(server.getWorld("world"), 50.0, 50.0, 50.0)
+        greaterCorner = Location(server.getWorld("world"), 100.0, 100.0, 100.0)
     }
 
     @ParameterizedTest
@@ -66,5 +72,37 @@ internal class GriefPreventionClaimTest : CozyClaimsTest() {
         fun chunkCeil(value: Double) = ceil(value / 16.0)
         val numOfChunks = (chunkCeil(x) * chunkCeil(z)).toInt()
         assertEquals(numOfChunks, claim.size)
+    }
+
+    @Test
+    @DisplayName("when calling toString")
+    fun whenCallingToString(): Unit {
+        println(GriefPreventionClaim(UUID.randomUUID(), lesserCorner, greaterCorner).toString())
+    }
+
+    @Test
+    @DisplayName("when checking equality of claims with same owner and same boundaries returns true")
+    fun whenCheckingEqualityOfClaimsWithSameOwnerAndSameBoundariesReturnsTrue(): Unit {
+        val owner = UUID.randomUUID()
+        val claimOne = GriefPreventionClaim(owner, lesserCorner, greaterCorner)
+        val claimTwo = GriefPreventionClaim(owner, lesserCorner, greaterCorner)
+        assertTrue(claimOne == claimTwo)
+    }
+
+    @Test
+    @DisplayName("when checking equality of claims with same owner and different boundaries returns false")
+    fun whenCheckingEqualityOfClaimsWithSameOwnerAndDifferentBoundariesReturnsFalse(): Unit {
+        val owner = UUID.randomUUID()
+        val claimOne = GriefPreventionClaim(owner, lesserCorner, greaterCorner)
+        val claimTwo = GriefPreventionClaim(owner, lesserCorner, greaterCorner.clone().add(1.0, 1.0, 1.0))
+        assertFalse(claimOne == claimTwo)
+    }
+
+    @Test
+    @DisplayName("when checking equality of claims with different owners and same boundaries returns false")
+    fun whenCheckingEqualityOfClaimsWithDifferentOwnersAndSameBoundariesReturnsFalse(): Unit {
+        val claimOne = GriefPreventionClaim(UUID.randomUUID(), lesserCorner, greaterCorner)
+        val claimTwo = GriefPreventionClaim(UUID.randomUUID(), lesserCorner, greaterCorner)
+        assertFalse(claimOne == claimTwo)
     }
 }
