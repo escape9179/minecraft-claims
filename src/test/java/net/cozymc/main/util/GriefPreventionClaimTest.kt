@@ -49,13 +49,13 @@ internal class GriefPreventionClaimTest : CozyClaimsTest() {
     @Test
     @DisplayName("when created with lesser boundary less than greater boundary")
     fun whenCreatedWithLesserBoundaryLessThanGreaterBoundary(): Unit {
-        val lesser = Location(server.worlds[0], 100.0, 0.0, 100.0)
-        val greater = Location(server.worlds[0], 0.0, 0.0, 0.0)
+        val lesser = Location(server.worlds[0], 0.0, 0.0, 0.0)
+        val greater = Location(server.worlds[0], 100.0, 0.0, 100.0)
         GriefPreventionClaim(UUID.randomUUID(), lesser, greater)
     }
 
     @ParameterizedTest
-    @CsvSource("100, 100", "100, 50", "50, 100")
+    @CsvSource("100, 100", "100, 50", "50, 100", "75, 100", "100, 75")
     @DisplayName("when getting chunks of varying region dimensions")
     fun whenGettingChunksOfVaryingRegionDimensions(accessor: ArgumentsAccessor): Unit {
         val x = accessor.getDouble(0)
@@ -63,7 +63,8 @@ internal class GriefPreventionClaimTest : CozyClaimsTest() {
         val lesser = Location(server.worlds[0], 0.0, 0.0, 0.0)
         val greater = Location(server.worlds[0], x, 10.0, z)
         val claim = GriefPreventionClaim(UUID.randomUUID(), lesser, greater).getChunks()
-        val numOfChunks = ceil(x / 16.0) * ceil(z / 16.0)
-        assertEquals(numOfChunks.toInt(), claim.size)
+        fun chunkCeil(value: Double) = ceil(value / 16.0)
+        val numOfChunks = (chunkCeil(x) * chunkCeil(z)).toInt()
+        assertEquals(numOfChunks, claim.size)
     }
 }
