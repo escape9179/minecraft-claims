@@ -6,7 +6,8 @@ claim:
     - "Trustees: %trustees"
     - "Size: %size"
   particleType: "villager_happy"
-
+griefPrevention:
+  claimDataPath: "plugins/GriefPreventionData/ClaimData"
 message:
   chunkClaimSuccess: "Claim successful."
   chunkClaimFailureMoney: "You need %d to make a claim."

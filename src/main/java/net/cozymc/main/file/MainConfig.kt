@@ -16,6 +16,10 @@ object MainConfig {
         return config.getInt("claim.cost")
     }
 
+    fun getGriefPreventionClaimDataPath(): String {
+        return config.getString("griefPrevention.claimDataPath")!!
+    }
+
     fun getClaimInfoDisplay(): List<String> {
         return config.getStringList("claim.info-display")
     }

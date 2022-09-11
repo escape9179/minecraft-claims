@@ -1,16 +1,48 @@
 package net.cozymc.main.util
 
 import net.cozymc.main.exception.InvalidRegionException
+import net.cozymc.main.file.MainConfig
 import org.bukkit.Bukkit
 import org.bukkit.Chunk
 import org.bukkit.Location
 import org.bukkit.configuration.file.YamlConfiguration
+import org.junit.jupiter.api.Assertions
 import java.io.File
+import java.io.IOException
+import java.nio.file.*
+import java.nio.file.attribute.BasicFileAttributes
 import java.util.*
+import kotlin.io.path.name
 
 object GriefPreventionUtility {
-    fun loadClaim(file: File): GriefPreventionClaim {
-        val config = YamlConfiguration.loadConfiguration(file)
+    fun loadAllClaims(path: String): Set<GriefPreventionClaim> {
+        val claims = mutableSetOf<GriefPreventionClaim>()
+        Files.walkFileTree(Paths.get(path), object : FileVisitor<Path> {
+            override fun preVisitDirectory(dir: Path?, attrs: BasicFileAttributes?): FileVisitResult {
+                return FileVisitResult.CONTINUE
+            }
+
+            override fun visitFile(file: Path?, attrs: BasicFileAttributes?): FileVisitResult {
+                if (file!!.name != "_nextClaimID") {
+                    println("Loading claim from file: ${file.name}")
+                    claims.add(loadClaim(path, file.name))
+                }
+                return FileVisitResult.CONTINUE
+            }
+
+            override fun visitFileFailed(file: Path?, exc: IOException?): FileVisitResult {
+                return FileVisitResult.CONTINUE
+            }
+
+            override fun postVisitDirectory(dir: Path?, exc: IOException?): FileVisitResult {
+                return FileVisitResult.CONTINUE
+            }
+        })
+        return claims
+    }
+
+    private fun loadClaim(parentName: String, fileName: String): GriefPreventionClaim {
+        val config = YamlConfiguration.loadConfiguration(File(parentName, fileName))
         val owner = UUID.fromString(config.getString("Owner"))
         val lesserCorner = getLocation(config.getString("Lesser Boundary Corner")!!)
         val greaterCorner = getLocation(config.getString("Greater Boundary Corner")!!)
