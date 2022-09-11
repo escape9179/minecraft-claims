@@ -2,7 +2,7 @@ package net.cozymc.api.utility
 
 import net.cozymc.main.CozyClaimsTest
 import net.cozymc.main.file.MainConfig
-import net.cozymc.main.util.GriefPreventionUtility
+import net.cozymc.main.griefprevention.GriefPreventionUtility
 import org.bukkit.WorldCreator
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Assertions.assertTrue

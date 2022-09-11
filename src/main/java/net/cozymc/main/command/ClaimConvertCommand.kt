@@ -6,10 +6,9 @@ import net.cozymc.main.claim.Claim
 import net.cozymc.main.CozyClaimsPlugin
 import net.cozymc.main.file.DataConfig
 import net.cozymc.main.file.MainConfig
-import net.cozymc.main.util.GriefPreventionUtility
+import net.cozymc.main.griefprevention.GriefPreventionUtility
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
-import java.io.File
 
 class ClaimConvertCommand : BasicCommand<Player>(
     "convert", "cozyclaims.convert",
