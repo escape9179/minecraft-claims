@@ -1,4 +1,4 @@
-package net.cozymc.main.util
+package net.cozymc.main.griefprevention
 
 import be.seeseemelk.mockbukkit.WorldMock
 import net.cozymc.main.griefprevention.GriefPreventionClaim
