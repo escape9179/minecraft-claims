@@ -48,7 +48,7 @@ class CozyClaimsPlugin(loader: JavaPluginLoader, description: PluginDescriptionF
         CommandDispatcher.registerCommand(MemberAddCommand())
         CommandDispatcher.registerCommand(RemoveMemberCommand())
         CommandDispatcher.registerCommand(ClaimUnclaimCommand())
-        CommandDispatcher.registerCommand(ClaimConvertCommand())
+        CommandDispatcher.registerCommand(ClaimConvertCommand)
         CommandDispatcher.registerCommand(TrustCommand())
         CommandDispatcher.registerCommand(DistrustCommand())
         CommandDispatcher.registerCommand(ClaimInfoCommand())

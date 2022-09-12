@@ -139,6 +139,14 @@ object MainConfig {
         return config.getString("message.interactNotAllowed")!!
     }
 
+    fun getClaimConvertSuccessMessage(): String {
+        return config.getString("message.claimConvertSuccess")!!
+    }
+
+    fun getNoClaimToConvertMessage(): String {
+        return config.getString("message.noClaimToConvertMessage")!!
+    }
+
     fun reload() {
         config = YamlConfiguration.loadConfiguration(file)
     }

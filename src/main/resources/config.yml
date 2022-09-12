@@ -36,3 +36,5 @@ message:
   memberChangeLevelSuccess: "Changed %s's level to %s."
   memberChangeLevelFailure: "%s is already level %s."
   interactNotAllowed: "You can't do that here."
+  claimConvertSuccess: "Conversion successful."
+  noClaimToConvertMessage: "You don't have a claim to convert."

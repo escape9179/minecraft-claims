@@ -12,13 +12,25 @@ import kotlin.reflect.KClass
 class CommandDispatcher private constructor() {
 
     enum class Result {
-        NO_RESULT, NO_PERMISSION, WRONG_TARGET, INVALID_NUMBER_OF_ARGUMENTS, INVALID_ARGUMENT_TYPE, SUCCESS
+        NO_RESULT, NO_PERMISSION, INVALID_TARGET, INVALID_NUMBER_OF_ARGUMENTS, INVALID_ARGUMENT_TYPE, SUCCESS
     }
 
     companion object : CommandExecutor {
 
+        fun getInvalidTargetMessage(expected: Class<out CommandSender>): String {
+            return invalidTargetMessage.format(expected.simpleName)
+        }
+
+        fun getInvalidNumberOfArgumentsMessage(expected: Int): String {
+            return invalidNumberOfArgumentsMessage.format(expected)
+        }
+
+        val ERROR_COLOR = ChatColor.RED
+
         private val registeredCommands = mutableSetOf<BasicCommand<*>>()
-        val NO_PERMISSION_MESSAGE  = "${ChatColor.RED}No permission."
+        val NO_PERMISSION_MESSAGE  = "${ERROR_COLOR}No permission."
+        private val invalidTargetMessage = "${ERROR_COLOR}You cannot perform this command as %s"
+        private val invalidNumberOfArgumentsMessage = "${ERROR_COLOR}Invalid number of arguments. Expected at least %d."
         var lastResult: Result = Result.NO_RESULT
 
         fun registerCommand(command: BasicCommand<*>) = registeredCommands.add(command)
@@ -41,8 +53,8 @@ class CommandDispatcher private constructor() {
             val commandTarget = if (sender is Player) SenderTarget.PLAYER else SenderTarget.CONSOLE
 
             if (!isValidTarget(commandTarget, foundCommand.first.target)) {
-                sender.sendMessage("${ChatColor.RED}You cannot perform this command as ${sender::class.simpleName}")
-                lastResult = Result.WRONG_TARGET
+                sender.sendMessage(getInvalidTargetMessage(sender::class.java))
+                lastResult = Result.INVALID_TARGET
                 return true
             }
 
@@ -54,18 +66,21 @@ class CommandDispatcher private constructor() {
             }
 
             if (foundCommand.first.argTypes.isNotEmpty() && !isCorrectArgTypeList(foundCommand.second, foundCommand.first.argTypes)) {
+                sender.sendMessage(getInvalidNumberOfArgumentsMessage(foundCommand.first.argRange.first))
                 foundCommand.first.usage?.let { sender.sendMessage(it) }
                 lastResult = Result.INVALID_ARGUMENT_TYPE
                 return true
             }
 
-            return when (foundCommand.first.target) {
+            when (foundCommand.first.target) {
                 SenderTarget.PLAYER -> (foundCommand.first as BasicCommand<Player>).run(
                     sender as Player,
                     foundCommand.second
                 )
                 else -> (foundCommand.first as BasicCommand<CommandSender>).run(sender, foundCommand.second)
             }
+            lastResult = Result.SUCCESS
+            return true
         }
 
         private fun searchForSubCommandRecursively(

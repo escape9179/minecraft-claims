@@ -115,7 +115,7 @@ class ClaimCommandTest : CozyClaimsTest() {
     @DisplayName("is performed by the console then fail")
     fun isPerformedByTheConsoleThenFail(): Unit {
         server.executeConsole("claim")
-        assertEquals(CommandDispatcher.lastResult, CommandDispatcher.Result.WRONG_TARGET)
+        assertEquals(CommandDispatcher.lastResult, CommandDispatcher.Result.INVALID_TARGET)
         assertEquals(emptySet(), DataConfig.loadClaims())
     }
 }

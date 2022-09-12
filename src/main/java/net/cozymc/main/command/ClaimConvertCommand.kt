@@ -10,23 +10,20 @@ import net.cozymc.main.griefprevention.GriefPreventionUtility
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 
-class ClaimConvertCommand : BasicCommand<Player>(
+object ClaimConvertCommand : BasicCommand<Player>(
     "convert", "cozyclaims.convert",
     0..0,
     target = SenderTarget.PLAYER,
     parentCommand = "claim",
 ) {
     override fun run(sender: Player, args: Array<out String>, data: Any?): Boolean {
-        val claims = GriefPreventionUtility.loadAllClaims(MainConfig.getGriefPreventionClaimDataPath())
-        Bukkit.getScheduler().runTaskAsynchronously(CozyClaimsPlugin.instance, Runnable {
-            claims.forEach {
-                CozyClaimsPlugin.log(it.toString())
-                val newClaimChunks = it.getChunks()
-                DataConfig.saveClaim(Claim.getOrCreate(it.owner, newClaimChunks))
-                CozyClaimsPlugin.log("Converted claims of ${it.owner}.")
-            }
-        })
-        CozyClaimsPlugin.log("Done converting claims.")
+        val claim = GriefPreventionUtility.loadAllClaims(MainConfig.getGriefPreventionClaimDataPath())
+            .firstOrNull { it.owner == sender.uniqueId } ?: run {
+            sender.sendMessage(MainConfig.getNoClaimToConvertMessage())
+            return true
+        }
+        DataConfig.saveClaim(Claim.getOrCreate(sender.uniqueId, claim.getChunks()))
+        sender.sendMessage(MainConfig.getClaimConvertSuccessMessage())
         return true
     }
 }
