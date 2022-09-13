@@ -10,7 +10,7 @@ import org.bukkit.configuration.serialization.ConfigurationSerializable
 import org.bukkit.entity.Player
 import java.util.UUID
 
-class Claim(val owner: UUID) : ConfigurationSerializable {
+class Claim private constructor(val id: Int, val owner: UUID) : ConfigurationSerializable {
     val chunks = mutableSetOf<Chunk>()
     val members = ClaimMemberSet()
     val trustees = mutableSetOf<UUID>()
@@ -21,15 +21,15 @@ class Claim(val owner: UUID) : ConfigurationSerializable {
         members.add(owner)
     }
 
-    constructor(owner: UUID, chunk: Chunk) : this(owner) {
+    constructor(id: Int, owner: UUID, chunk: Chunk) : this(id, owner) {
         chunks.add(chunk)
     }
 
-    constructor(owner: UUID, chunks: Set<Chunk>) : this(owner) {
+    constructor(id: Int, owner: UUID, chunks: Set<Chunk>) : this(id, owner) {
         this.chunks.addAll(chunks)
     }
 
-    constructor(map: Map<String, *>) : this(UUID.fromString(map["owner"].toString())) {
+    constructor(map: Map<String, *>) : this(map["id"].toString().toInt(),UUID.fromString(map["owner"].toString())) {
         members.addAll((map["members"] as List<*>).map(Any?::toString).map(UUID::fromString))
         trustees.addAll((map["trustees"] as List<*>).map(Any?::toString).map(UUID::fromString))
         chunks.addAll(
@@ -82,6 +82,7 @@ class Claim(val owner: UUID) : ConfigurationSerializable {
 
     override fun serialize(): MutableMap<String, Any> {
         return mutableMapOf(
+            "id" to id.toString(),
             "owner" to owner.toString(),
             "members" to members.map { it.uuid.toString() },
             "trustees" to trustees.map(UUID::toString),
@@ -98,6 +99,15 @@ class Claim(val owner: UUID) : ConfigurationSerializable {
     }
 
     companion object {
+        fun create(owner: UUID, chunk: Chunk): Claim {
+            return Claim(DataConfig.nextId++, owner, chunk)
+        }
+
+        fun create(owner: UUID, chunks: Set<Chunk>): Claim {
+            return Claim(DataConfig.nextId++, owner, chunks)
+        }
+
+
         fun isClaimed(location: Location): Boolean {
             DataConfig.loadClaims().forEach { if (it.chunks.contains(location.chunk)) return true }
             return false
@@ -112,11 +122,11 @@ class Claim(val owner: UUID) : ConfigurationSerializable {
         }
 
         fun getOrCreate(owner: UUID, chunk: Chunk): Claim {
-            return DataConfig.loadOwnerClaim(owner)?.also { it.addChunk(chunk) } ?: return Claim(owner, chunk)
+            return DataConfig.loadOwnerClaim(owner)?.also { it.addChunk(chunk) } ?: return create(owner, chunk)
         }
 
         fun getOrCreate(owner: UUID, chunks: Set<Chunk>): Claim {
-            return DataConfig.loadOwnerClaim(owner)?.also { it.addChunks(chunks) } ?: return Claim(owner, chunks)
+            return DataConfig.loadOwnerClaim(owner)?.also { it.addChunks(chunks) } ?: return create(owner, chunks)
         }
     }
 }

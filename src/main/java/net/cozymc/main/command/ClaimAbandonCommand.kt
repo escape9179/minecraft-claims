@@ -5,9 +5,12 @@ import logan.api.command.SenderTarget
 import net.cozymc.main.file.DataConfig
 import net.cozymc.main.file.MainConfig
 import net.cozymc.main.util.getOccupyingClaim
+import net.cozymc.main.util.isClaimMemberOf
 import net.cozymc.main.util.isClaimOwnerOf
 import net.cozymc.main.util.isRelativeOfAnyClaim
 import org.bukkit.entity.Player
+import java.util.Date
+import javax.xml.crypto.Data
 
 class ClaimAbandonCommand : BasicCommand<Player>(
     "abandon", "cozyclaims.abandon", 0..1,
@@ -22,7 +25,7 @@ class ClaimAbandonCommand : BasicCommand<Player>(
             sender.sendMessage(MainConfig.getNotInsideClaimMessage())
             return true
         }
-        if (!sender.isClaimOwnerOf(claim)) {
+        if (!sender.isClaimOwnerOf(claim) && !sender.isClaimMemberOf(claim)) {
             sender.sendMessage(MainConfig.getNotOwnerOfOccupyingClaimMessage())
             return true
         }
@@ -35,7 +38,9 @@ class ClaimAbandonCommand : BasicCommand<Player>(
             claim.chunks.clear()
             sender.sendMessage(MainConfig.getClaimAbandonAllSuccessMessage(size))
         }
-        DataConfig.saveClaim(claim)
+        if (claim.chunks.isEmpty()) {
+            DataConfig.removeClaim(claim)
+        } else DataConfig.saveClaim(claim)
         return true
     }
 }

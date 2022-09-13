@@ -48,6 +48,10 @@ fun Player.isClaimOwnerOf(claim: Claim): Boolean {
     return claim.owner == uniqueId
 }
 
+fun Player.isClaimMemberOf(claim: Claim): Boolean {
+    return uniqueId in claim.members
+}
+
 private val lastBlockLocationMap = mutableMapOf<UUID, BlockLocation>()
 var Player.lastBlockLocation: BlockLocation
     get() = lastBlockLocationMap[uniqueId] ?: BlockLocation.from(location)

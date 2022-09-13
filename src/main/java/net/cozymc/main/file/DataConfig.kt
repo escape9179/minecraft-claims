@@ -5,11 +5,17 @@ import net.cozymc.main.DATA_FOLDER_PATH
 import net.cozymc.main.claim.Claim
 import org.bukkit.configuration.file.YamlConfiguration
 import java.io.File
+import java.nio.file.Files
 import java.util.*
 
 object DataConfig {
     private val file = File(DATA_FOLDER_PATH, DATA_FILE_NAME)
     private var config = YamlConfiguration.loadConfiguration(file)
+    var nextId = 0
+
+    init {
+        nextId = config.getInt("nextId", 0)
+    }
 
     fun getClaimOwners(): List<UUID> {
         return config.getKeys(false).map(UUID::fromString)
@@ -17,7 +23,7 @@ object DataConfig {
 
     fun loadClaims(): Set<Claim> {
         return config.getKeys(false)
-            .map { key -> config.getSerializable("$key.claim", Claim::class.java)!! }
+            .map { key -> config.getSerializable(key, Claim::class.java)!! }
             .toSet()
     }
 
@@ -30,12 +36,19 @@ object DataConfig {
     }
 
     fun saveClaim(claim: Claim) {
-        config.set("${claim.owner}.claim", claim)
+        config.set("${claim.id}", claim)
         save()
     }
 
+    fun removeClaim(claim: Claim): Claim? {
+        return removeClaim(claim.owner)
+    }
+
     fun removeClaim(owner: UUID): Claim? {
-        return this.loadOwnerClaim(owner).also { config.set("$owner.claim", null); save() }
+        val claim = loadClaims().firstOrNull { owner == it.owner }
+        config.set(claim?.id.toString(), null)
+        save()
+        return claim
     }
 
     fun delete() {
