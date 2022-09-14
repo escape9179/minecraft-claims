@@ -1,6 +1,7 @@
 package net.cozymc.main.command
 
 import be.seeseemelk.mockbukkit.entity.PlayerMock
+import net.cozymc.api.command.CommandDispatcher
 import net.cozymc.main.CozyClaimsTest
 import net.cozymc.main.claim.Claim
 import net.cozymc.main.file.DataConfig
@@ -76,76 +77,54 @@ class ClaimAbandonCommandTest : CozyClaimsTest() {
         }
     }
 
-    @Test
-    @DisplayName("removes the claim when run by a claim member inside the claim")
-    fun removesTheClaimWhenRunByAClaimMemberInsideTheClaim(): Unit {
-        val owner = UUID.randomUUID()
-        val claim = Claim.create(owner, player.chunk)
-        DataConfig.saveClaim(claim)
-        assertEquals(1, DataConfig.loadClaims().size)
-        player.isOp = true
-        claim.addMember(player)
-        player.performCommand("claim abandon")
-        Mockito.verify(player).sendMessage(MainConfig.getClaimAbandonSuccessMessage())
-        assertNull(DataConfig.loadOwnerClaim(owner))
-    }
-
-    @Test
-    @DisplayName("removes the claim when run by the claim owner inside the claim")
-    fun removesTheClaimWhenRunByTheClaimOwnerInsideTheClaim(): Unit {
-        val claim = Claim.create(player.uniqueId, player.chunk)
-        DataConfig.saveClaim(claim)
-        player.isOp = true
-        assertEquals(1, DataConfig.loadClaims().size)
-        player.performCommand("claim abandon")
-        Mockito.verify(player).sendMessage(MainConfig.getClaimAbandonSuccessMessage())
-        assertNull(DataConfig.loadOwnerClaim(player.uniqueId))
-    }
-
-    @Test
-    @DisplayName("sends an error message when run by a relative of a different claim")
-    fun sendsAnErrorMessageWhenRunByARelativeOfADifferentClaim(): Unit {
-
-
-    }
-
     @Nested
-    @DisplayName(" performed by a player inside a claim")
-    inner class IsPerformedByAPlayerInsideAClaim {
+    @DisplayName("when run by a player inside the claim")
+    inner class WhenRunByAPlayerInsideTheClaim {
         @Test
-        @DisplayName("who is the claim owner then succeed")
-        fun whoIsTheClaimOwnerThenSucceed(): Unit {
-
+        @DisplayName("removes the claim when run by a claim member")
+        fun removesTheClaimWhenRunByAClaimMemberInsideTheClaim(): Unit {
+            val owner = UUID.randomUUID()
+            val claim = Claim.create(owner, player.chunk)
+            DataConfig.saveClaim(claim)
+            assertEquals(1, DataConfig.loadClaims().size)
+            player.isOp = true
+            claim.members.add(player.uniqueId)
+            player.performCommand("claim abandon")
+            Mockito.verify(player).sendMessage(MainConfig.getClaimAbandonSuccessMessage())
+            assertNull(DataConfig.loadOwnerClaim(owner))
         }
 
         @Test
-        @DisplayName("who is a claim owner then fail")
-        fun whoIsAClaimOwnerThenFail(): Unit {
-
+        @DisplayName("removes the claim when run by the claim owner")
+        fun removesTheClaimWhenRunByTheClaimOwnerInsideTheClaim(): Unit {
+            val claim = Claim.create(player.uniqueId, player.chunk)
+            DataConfig.saveClaim(claim)
+            player.isOp = true
+            assertEquals(1, DataConfig.loadClaims().size)
+            player.performCommand("claim abandon")
+            Mockito.verify(player).sendMessage(MainConfig.getClaimAbandonSuccessMessage())
+            assertNull(DataConfig.loadOwnerClaim(player.uniqueId))
         }
 
         @Test
-        @DisplayName("who is a trustee of the claim then fail")
-        fun whoIsATrusteeOfTheClaimThenFail() {
-
-        }
-
-        @Test
-        @DisplayName("who is a member of the claim then fail")
-        fun whoIsAMemberOfAClaimThenFail(): Unit {
-
-        }
-
-        @Test
-        @DisplayName("who is not a relative of the claim then fail")
-        fun whoIsNotARelativeOfTheClaimThenFail(): Unit {
-
+        @DisplayName("sends an error message when performed by trustee of the claim")
+        fun sendsAnErrorMessageWhenPerformedByATrusteeOfTheClaim(): Unit {
+            val owner = UUID.randomUUID()
+            val claim = Claim.create(owner, player.chunk)
+            claim.trustees.add(player.uniqueId)
+            DataConfig.saveClaim(claim)
+            assertTrue(player.uniqueId in DataConfig.loadOwnerClaim(owner)!!.trustees)
+            player.isOp = true
+            player.performCommand("claim abandon")
+            Mockito.verify(player).sendMessage(MainConfig.getNotOwnerOfOccupyingClaimMessage())
+            assertNotNull(DataConfig.loadOwnerClaim(owner))
         }
     }
 
     @Test
-    @DisplayName("is performed by the console then fail")
-    fun isPerformedByConsoleThenFail(): Unit {
-
+    @DisplayName("sends wrong target message when performed by console")
+    fun sendsWrongTargetMessageWhenPerformedByConsole(): Unit {
+        server.executeConsole("claim", "abandon")
+        assertEquals(CommandDispatcher.Result.INVALID_TARGET, CommandDispatcher.lastResult)
     }
 }

@@ -40,34 +40,6 @@ class Claim private constructor(val id: Int, val owner: UUID) : ConfigurationSer
         )
     }
 
-    fun addChunk(chunk: Chunk) {
-        chunks.add(chunk)
-    }
-
-    fun addChunks(chunks: Set<Chunk>) {
-        this.chunks.addAll(chunks)
-    }
-
-    fun removeChunk(chunk: Chunk) {
-        chunks.remove(chunk)
-    }
-
-    fun addMember(player: Player): Boolean {
-        return members.add(player.uniqueId)
-    }
-
-    fun addTrustee(player: Player): Boolean {
-        return trustees.add(player.uniqueId)
-    }
-
-    fun removeTrustee(player: Player): Boolean {
-        return trustees.remove(player.uniqueId)
-    }
-
-    fun removeMember(player: Player): Boolean {
-        return members.remove(player.uniqueId)
-    }
-
     fun forEachChunk(func: (Chunk) -> Unit) {
         chunks.forEach(func)
     }
@@ -122,11 +94,11 @@ class Claim private constructor(val id: Int, val owner: UUID) : ConfigurationSer
         }
 
         fun getOrCreate(owner: UUID, chunk: Chunk): Claim {
-            return DataConfig.loadOwnerClaim(owner)?.also { it.addChunk(chunk) } ?: return create(owner, chunk)
+            return DataConfig.loadOwnerClaim(owner)?.also { it.chunks.add(chunk) } ?: return create(owner, chunk)
         }
 
         fun getOrCreate(owner: UUID, chunks: Set<Chunk>): Claim {
-            return DataConfig.loadOwnerClaim(owner)?.also { it.addChunks(chunks) } ?: return create(owner, chunks)
+            return DataConfig.loadOwnerClaim(owner)?.also { it.chunks.addAll(chunks) } ?: return create(owner, chunks)
         }
     }
 }

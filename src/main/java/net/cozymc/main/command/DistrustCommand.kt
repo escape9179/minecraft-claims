@@ -24,7 +24,7 @@ class DistrustCommand : BasicCommand<Player>(
         }
 
         val claim = DataConfig.loadOwnerClaim(sender.uniqueId)
-        if (claim!!.removeTrustee(trustee)) {
+        if (claim!!.trustees.remove(trustee.uniqueId)) {
             sender.sendMessage(MainConfig.getRemoveTrusteeSuccessMessage(trustee.name))
             DataConfig.saveClaim(claim)
         } else sender.sendMessage(MainConfig.getNotTrusteeOfClaimMessage())

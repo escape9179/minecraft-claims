@@ -18,7 +18,7 @@ object DataConfig {
     }
 
     fun getClaimOwners(): List<UUID> {
-        return config.getKeys(false).map(UUID::fromString)
+        return loadClaims().map { it.owner }
     }
 
     fun loadClaims(): Set<Claim> {

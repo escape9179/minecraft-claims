@@ -25,7 +25,7 @@ class MemberAddCommand : BasicCommand<Player>(
             return true
         }
 
-        if (claim.addMember(member)) {
+        if (claim.members.add(member.uniqueId)) {
             sender.sendMessage(MainConfig.getAddMemberSuccessMessage(member.name))
             DataConfig.saveClaim(claim)
         } else sender.sendMessage(MainConfig.getPersonAlreadyMemberMessage())
