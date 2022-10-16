@@ -1,7 +1,6 @@
 package net.cozymc.main.chunk
 
 import org.bukkit.Chunk
-import org.bukkit.Location
 import org.bukkit.block.Block
 
 class AdjacentChunk(val chunk: Chunk, val adjacency: Adjacency) {

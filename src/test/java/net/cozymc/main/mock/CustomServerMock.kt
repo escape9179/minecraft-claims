@@ -27,4 +27,8 @@ class CustomServerMock : ServerMock() {
     override fun <T : Keyed?> getRegistry(p0: Class<T>): Registry<T>? {
         TODO("Not yet implemented")
     }
+
+    override fun isTickingWorlds(): Boolean {
+        TODO("Not yet implemented")
+    }
 }
